@@ -1,4 +1,6 @@
-﻿namespace StretchCeiling;
+﻿using StretchCeiling.View.Pages;
+
+namespace StretchCeiling;
 
 public partial class AppShell : Shell
 {
@@ -7,5 +9,6 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
 		Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
-	}
+        Routing.RegisterRoute(nameof(BuilderPage), typeof(BuilderPage));
+    }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
+             x:Class="StretchCeiling.View.Pages.BuilderPage"
+             x:DataType="vm:BuilderViewModel"
+             Title="BuilderPage">
+
+    <VerticalStackLayout Padding="10">
+        <Frame BackgroundColor="Gray" HeightRequest="400">
+            <Polygon Aspect="Uniform" Points="{Binding Points}" Fill="{StaticResource Gray100}" StrokeThickness="3" Stroke="{StaticResource Gray600}"/>
+        </Frame>
+        <Frame BackgroundColor="Gray">
+            <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                <Picker ItemsSource="{Binding Angles}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="#CCCCFF" Title="Angle" IsEnabled="{Binding HasPickerActive}" SelectedItem="{Binding OnSelectAngle}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Text="{Binding EntrySegment}" BackgroundColor="#CCCCFF" Placeholder="cm" MinimumWidthRequest="60" Keyboard="Numeric" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                <Button Text="ADD" Command="{Binding AddSegmentPointCommand}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                <Button Text="Clear" Command="{Binding ClearPointsCommand}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame BackgroundColor="Gray">
+            
+                <ListView ItemsSource="{Binding Segments}" MaximumHeightRequest="160">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding .}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            
+        </Frame>
+        <Button Text="GoBack"
+                    Command="{Binding GoBackCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

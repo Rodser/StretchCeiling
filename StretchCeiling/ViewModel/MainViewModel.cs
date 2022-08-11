@@ -1,11 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
+using StretchCeiling.View.Pages;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StretchCeiling.ViewModel
 {
@@ -44,11 +40,16 @@ namespace StretchCeiling.ViewModel
             items.Add(newItem);
         }
 
-
         [RelayCommand]
         private async Task Tap(string s)
         {
             await Shell.Current.GoToAsync($"{nameof(DetailPage)}?DetailText={s}");
+        }
+
+        [RelayCommand]
+        private async Task BuildCeiling()
+        {
+            await Shell.Current.GoToAsync(nameof(BuilderPage));
         }
 
         [RelayCommand]

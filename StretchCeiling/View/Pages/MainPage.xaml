@@ -77,10 +77,9 @@
                 HorizontalOptions="Center" />
 
             <Button
-                x:Name="CounterBtn"
-                Text="Calculate"
+                Text="Build"
                 HorizontalOptions="Center"
-                Clicked="Calculate_Clicked"/>
+                Command="{Binding BuildCeilingCommand}"/>
 
         </VerticalStackLayout>
     </ScrollView>

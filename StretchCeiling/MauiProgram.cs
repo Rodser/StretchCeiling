@@ -1,4 +1,5 @@
-﻿using StretchCeiling.ViewModel;
+﻿using StretchCeiling.View.Pages;
+using StretchCeiling.ViewModel;
 
 namespace StretchCeiling;
 
@@ -18,10 +19,11 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<MainPage>()
 						.AddSingleton<MainViewModel>();
-
 		builder.Services.AddTransient<DetailPage>()
 						.AddTransient<DetailViewModel>();
+        builder.Services.AddTransient<BuilderPage>()
+                        .AddTransient<BuilderViewModel>();
 
-		return builder.Build();
+        return builder.Build();
 	}
 }
