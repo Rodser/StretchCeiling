@@ -8,7 +8,7 @@ namespace StretchCeiling.Model
         public Segment(PointCollection points, double distance, Angle angle)
         {
             _points = points;
-            StartPoint = _points[_points.Count-1];
+            StartPoint = _points[_points.Count - 2];
             StartName = GetNameOfPoint(_points.Count - 2);
             EndPoint = _points[_points.Count - 1];
             EndName = GetNameOfPoint(_points.Count - 1);

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
+             x:DataType="vm:EditorSegmentViewModel"
+             x:Class="StretchCeiling.View.Pages.EditorSegmentPage"
+             Title="EditorSegmentPage">
+    <VerticalStackLayout>
+        <Frame BackgroundColor="Gray">
+            <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                <Picker ItemsSource="{Binding Angles}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+                        BackgroundColor="#CCCCFF" Title="Angle" 
+                        SelectedItem="{Binding OnSelectAngle}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Entry Text="{Binding EntrySegment}" BackgroundColor="#CCCCFF" Placeholder="cm" MinimumWidthRequest="60" 
+                       Keyboard="Numeric" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                <Button Text="ADD" Command="{Binding AddSegmentCommand}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Button Text="GoBack"
+                    Command="{Binding GoBackCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

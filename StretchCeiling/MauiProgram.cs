@@ -19,10 +19,12 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<MainPage>()
 						.AddSingleton<MainViewModel>();
-		builder.Services.AddTransient<DetailPage>()
-						.AddTransient<DetailViewModel>();
+		//builder.Services.AddTransient<DetailPage>()
+		//				.AddTransient<DetailViewModel>();
         builder.Services.AddTransient<BuilderPage>()
                         .AddTransient<BuilderViewModel>();
+        builder.Services.AddTransient<EditorSegmentPage>()
+                        .AddTransient<EditorSegmentViewModel>();
 
         return builder.Build();
 	}

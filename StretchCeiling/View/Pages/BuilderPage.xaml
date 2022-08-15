@@ -7,26 +7,21 @@
              Title="BuilderPage">
 
     <VerticalStackLayout Padding="10">
-        <Frame BackgroundColor="Gray" HeightRequest="400">
+        <Frame BackgroundColor="{StaticResource Gray400}" HeightRequest="390">
             <Polygon Aspect="Uniform" Points="{Binding Points}" Fill="{StaticResource Gray100}" StrokeThickness="3" Stroke="{StaticResource Gray600}"/>
         </Frame>
-        <Frame BackgroundColor="Gray">
-            <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
-                <Picker ItemsSource="{Binding Angles}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" BackgroundColor="#CCCCFF" Title="Angle" IsEnabled="{Binding HasPickerActive}" SelectedItem="{Binding OnSelectAngle}" VerticalOptions="Center" HorizontalOptions="Center"/>
-                <Entry Text="{Binding EntrySegment}" BackgroundColor="#CCCCFF" Placeholder="cm" MinimumWidthRequest="60" Keyboard="Numeric" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
-                <Button Text="ADD" Command="{Binding AddSegmentPointCommand}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
-                <Button Text="Clear" Command="{Binding ClearPointsCommand}" VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
-            </HorizontalStackLayout>
+        <Frame>
+            <Button Text="Добавить Сторону" Command="{Binding OpenEditorSegmentCommand}" />
         </Frame>
-        <Frame BackgroundColor="Gray">
+        <Frame >
             
-                <ListView ItemsSource="{Binding Segments}" MaximumHeightRequest="160">
-                    <ListView.ItemTemplate>
+                <CollectionView ItemsSource="{Binding Segments}" MaximumHeightRequest="160">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding .}"/>
+                        <TextCell Text="{Binding .}"/>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             
         </Frame>
         <Button Text="GoBack"
