@@ -21,31 +21,7 @@
                 Source="dotnet_bot.png"
                 HeightRequest="100"
                 HorizontalOptions="Center" />
-
-            <HorizontalStackLayout>                
-                <Entry
-                    Text="{Binding Name}"
-                    Keyboard="Text"
-                    Placeholder="Name"/>
-                <Entry
-                    Text="{Binding Count}"
-                    Keyboard="Numeric"
-                    Placeholder="Count"/>
-                <Entry
-                    x:Name="Price"
-                    Text="{Binding Price}"
-                    Keyboard="Numeric"
-                    Placeholder="Price"/>
-                <Entry
-                    Text="{Binding MeasurementSystem}"
-                    Keyboard="Default"
-                    Placeholder="MeaSys"/>     
-            </HorizontalStackLayout>
             
-            <Button Text="Add Category"
-                     Command="{Binding AddCommand}"
-                     Margin="10" />
-
             <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type x:String}" >
@@ -77,7 +53,7 @@
                 HorizontalOptions="Center" />
 
             <Button
-                Text="Build"
+                Text="Построить"
                 HorizontalOptions="Center"
                 Command="{Binding BuildCeilingCommand}"/>
 

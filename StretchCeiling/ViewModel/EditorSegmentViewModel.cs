@@ -9,15 +9,27 @@ namespace StretchCeiling.ViewModel
     {
         public EditorSegmentViewModel()
         {
-            _repository = new Repository();
-            _selectedAngleDefault = "0";
-            OnSelectAngle = _selectedAngleDefault;
-            Angles = GetListAngels(_repository.DefaultAngles);
-            HasPickerActive = false;
+            _standartAngles = new StandartAngles();
+            Angles = GetListAngels(_standartAngles.Angles);            
         }
 
-        private readonly Repository _repository;
-        private readonly string _selectedAngleDefault;
+        private void SetAngle()
+        {
+            if (Segments.Count > 0)
+            {
+                OnSelectAngle = _selectedAngleDefault;
+                HasPickerActive = true;
+            }
+            else
+            {
+                OnSelectAngle = _selectedFirstAngleDefault;
+                HasPickerActive = false;
+            }
+        }
+
+        private readonly StandartAngles _standartAngles;
+        private readonly string _selectedFirstAngleDefault = "0";
+        private readonly string _selectedAngleDefault = "90";
         [ObservableProperty]
         private string _onSelectAngle;
         [ObservableProperty]
@@ -35,23 +47,27 @@ namespace StretchCeiling.ViewModel
         {
             Segments = query[nameof(Segments)] as ObservableCollection<Segment>;
             Points = query[nameof(Points)] as PointCollection;
+            SetAngle();
         }
 
         [RelayCommand]
-        private async void AddSegment(object sender)
+        private async void AddSegment()
         {
             var angle = new Angle(double.Parse(OnSelectAngle ?? "0"));
             if (Segments.Count > 0)
             {
-                angle.SetValueDegrees(Segments[Segments.Count - 1].Angle);
+                angle.SetValueDegrees(Segments[^1].Angle);
+            }
+            if (EntrySegment <= 0)
+            {
+                return;
             }
             var point = CreatePoint(EntrySegment, angle);
             Points.Add(point);
             var segment = new Segment(Points, EntrySegment, angle);
+            Segments.Add(segment);
 
-            var dic = new Dictionary<string, object> { { "segment", segment } };
-
-            await Shell.Current.GoToAsync("..", dic);
+            await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
@@ -62,8 +78,8 @@ namespace StretchCeiling.ViewModel
 
         private Point CreatePoint(double distance, Angle angle)
         {
-            var newX = distance * Math.Cos(angle.Radian) + Points[Points.Count - 1].X;
-            var newY = distance * Math.Sin(angle.Radian) + Points[Points.Count - 1].Y;
+            var newX = distance * Math.Cos(angle.Radian) + Points[^1].X;
+            var newY = distance * Math.Sin(angle.Radian) + Points[^1].Y;
             return new Point(newX, newY);
         }
 
