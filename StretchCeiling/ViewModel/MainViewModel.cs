@@ -10,15 +10,11 @@ namespace StretchCeiling.ViewModel
     {
         public MainViewModel()
         {
-            Ceilings = new ObservableCollection<Ceiling>();
+            _ceilings = AppShell.s_ceilings;
         }
 
         [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
-        [ObservableProperty] private string name;
-        [ObservableProperty] private PointCollection _points;
-        [ObservableProperty] private string count;
         [ObservableProperty] private string price;
-        [ObservableProperty] private string measurementSystem;
 
         private Ceiling _lastCeiling;
 
@@ -36,11 +32,14 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task BuildCeiling()
         {
-            _lastCeiling = new Ceiling();
+            _lastCeiling = new Ceiling();            
+            _ceilings.Add(_lastCeiling);
+
             var query = new Dictionary<string, object>
             {
                 { nameof(Ceiling), _lastCeiling }
             };
+
             await Shell.Current.GoToAsync(nameof(BuilderPage), query);
         }
 

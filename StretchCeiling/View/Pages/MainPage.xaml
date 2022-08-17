@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StretchCeiling.MainPage"
              xmlns:viewmodel="clr-namespace:StretchCeiling.ViewModel"
+             xmlns:viewceiling="clr-namespace:StretchCeiling.View.Content"
              x:DataType="viewmodel:MainViewModel"
              Title="">
 
@@ -22,29 +23,27 @@
                 HeightRequest="100"
                 HorizontalOptions="Center" />
             
-            <CollectionView ItemsSource="{Binding Ceilings}" SelectionMode="None">
+            <CollectionView ItemsSource="{Binding Ceilings}">
+                <CollectionView.EmptyView>
+                    <StackLayout BackgroundColor="{StaticResource Cyan100Accent}">
+                        <Polygon Points="0 0, 0 10, 10 10" 
+                                 Aspect="Uniform" 
+                                 Fill="{StaticResource Gray100}"
+                                 StrokeThickness="3" 
+                                 Stroke="{StaticResource Gray600}"/>
+                        <Label Text="None"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                                <Polygon Points="{Binding Points}"/>
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Delete"
-                                               BackgroundColor="{StaticResource Yellow100Accent}"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
-                                               CommandParameter="{Binding .}"/>
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Frame BackgroundColor="{StaticResource Blue300Accent}">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
-                                                          CommandParameter="{Binding .}"/>
-                                </Frame.GestureRecognizers>
-                                <Label Text="{Binding }"/>
-                            </Frame>
-                        </SwipeView>
-                        </Grid>
+                    <DataTemplate x:DataType="viewmodel:CeilingViewModel">
+                        <StackLayout Padding="20" Spacing="10" BackgroundColor="{StaticResource Cyan100Accent}">
+                            <Polygon Points="{Binding Points}" 
+                                 Aspect="Uniform" 
+                                 Fill="{StaticResource Gray100}"
+                                 StrokeThickness="3" 
+                                 Stroke="{StaticResource Gray600}"/>
+                            <Label Text="{Binding Price}"/>
+                        </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
