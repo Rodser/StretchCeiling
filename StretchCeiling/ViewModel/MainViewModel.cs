@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StretchCeiling.Model;
 using StretchCeiling.View.Pages;
 using System.Collections.ObjectModel;
 
@@ -9,35 +10,21 @@ namespace StretchCeiling.ViewModel
     {
         public MainViewModel()
         {
-            Items = new ObservableCollection<string>();
+            Ceilings = new ObservableCollection<Ceiling>();
         }
 
-        [ObservableProperty]
-        ObservableCollection<string> items;
+        [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
+        [ObservableProperty] private string name;
+        [ObservableProperty] private PointCollection _points;
+        [ObservableProperty] private string count;
+        [ObservableProperty] private string price;
+        [ObservableProperty] private string measurementSystem;
 
-        [ObservableProperty]
-        private string name;
-
-        [ObservableProperty]
-        private string count;
-
-        [ObservableProperty]
-        private string price;
-
-        [ObservableProperty]
-        private string measurementSystem;
+        private Ceiling _lastCeiling;
 
         [RelayCommand]
         private void Add()
         {
-            if (string.IsNullOrWhiteSpace(name) &&
-                string.IsNullOrWhiteSpace(count) &&
-                string.IsNullOrWhiteSpace(price) &&
-                string.IsNullOrWhiteSpace(measurementSystem))
-                return;
-
-            string newItem = CreateItem();
-            items.Add(newItem);
         }
 
         [RelayCommand]
@@ -49,21 +36,18 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task BuildCeiling()
         {
-            await Shell.Current.GoToAsync(nameof(BuilderPage));
+            _lastCeiling = new Ceiling();
+            var query = new Dictionary<string, object>
+            {
+                { nameof(Ceiling), _lastCeiling }
+            };
+            await Shell.Current.GoToAsync(nameof(BuilderPage), query);
         }
 
         [RelayCommand]
         private void Delete(string s)
         {
-            if (Items.Contains(s))
-            {
-                Items.Remove(s);
-            }
-        }
-
-        private string CreateItem()
-        {
-            return $"{name} ({price} руб) : {count} {measurementSystem}";
+            
         }
     }
 }

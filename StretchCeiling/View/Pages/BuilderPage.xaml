@@ -6,8 +6,8 @@
              x:DataType="vm:BuilderViewModel"
              Title="BuilderPage">
 
-    <VerticalStackLayout Padding="10">
-        <Frame BackgroundColor="{StaticResource Gray400}"
+    <VerticalStackLayout Padding="10" BackgroundColor="{StaticResource Gray600}">
+        <Frame BackgroundColor="{StaticResource Gray200}"
                HeightRequest="390"
                MinimumHeightRequest="300"
                MinimumWidthRequest="100">
@@ -21,7 +21,7 @@
             <Button Text="Добавить Сторону" 
                     Command="{Binding OpenEditorSegmentCommand}" />
         </Frame>
-        <Frame BackgroundColor="{StaticResource Gray400}">
+        <Frame BackgroundColor="{StaticResource Gray200}">
             
                 <ListView ItemsSource="{Binding Segments}" 
                           MaximumHeightRequest="160"

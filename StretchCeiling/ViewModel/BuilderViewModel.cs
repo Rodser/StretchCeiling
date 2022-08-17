@@ -4,32 +4,25 @@ using CommunityToolkit.Mvvm.Input;
 using StretchCeiling.Model;
 using StretchCeiling.View.Pages;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class BuilderViewModel : ObservableObject
+    public partial class BuilderViewModel : ObservableObject, IQueryAttributable
     {
-        public BuilderViewModel()
-        {
-            Points = new PointCollection
-            {
-                Point.Zero,
-            };
-            Segments = new ObservableCollection<Segment>();
-        }
-
-        [ObservableProperty]
-        public PointCollection _points;
-        [ObservableProperty]
-        public double _entrySegment;
-        [ObservableProperty]
-        public ObservableCollection<Segment> _segments;
+        [ObservableProperty] private PointCollection _points;
+        [ObservableProperty] private double _entrySegment;
+        [ObservableProperty] private ObservableCollection<Segment> _segments;
+        
+        private Ceiling _ceiling;
 
         [RelayCommand]
         private async void OpenEditorSegment()
         {
-            var query = new Dictionary<string, object> { { nameof(Segments), Segments }, { nameof(Points), Points } };
+            var query = new Dictionary<string, object>
+            {  
+                { nameof(Segments), Segments },
+                { nameof(Points), Points }
+            };
             await Shell.Current.GoToAsync(nameof(EditorSegmentPage), query);
         }
 
@@ -45,6 +38,13 @@ namespace StretchCeiling.ViewModel
         private async Task GoBack()
         {
             await Shell.Current.GoToAsync("..");
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            _ceiling = query[nameof(Ceiling)] as Ceiling;
+            Segments = _ceiling.Scheme.Segments;
+            Points = _ceiling.Scheme.Points;
         }
     }
 }

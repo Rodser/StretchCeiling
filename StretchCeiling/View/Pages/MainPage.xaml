@@ -22,9 +22,11 @@
                 HeightRequest="100"
                 HorizontalOptions="Center" />
             
-            <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
+            <CollectionView ItemsSource="{Binding Ceilings}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type x:String}" >
+                    <DataTemplate>
+                        <Grid>
+                                <Polygon Points="{Binding Points}"/>
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems>
@@ -42,6 +44,7 @@
                                 <Label Text="{Binding }"/>
                             </Frame>
                         </SwipeView>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

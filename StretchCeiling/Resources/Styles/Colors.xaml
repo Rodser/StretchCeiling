@@ -41,4 +41,9 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
+    <Color x:Key="LimeDark">#42564F</Color>
+    <Color x:Key="Lime">#ceb</Color>
+    <Color x:Key="LimeLight">#F7F6E7</Color>
+    <Color x:Key="LimeGray">#DFDDC5</Color>
+
 </ResourceDictionary>

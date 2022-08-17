@@ -1,21 +1,17 @@
 ﻿
 namespace StretchCeiling.Model
 {
-    internal class Ceiling
+    public class Ceiling
     {
-        public int Id { get; set; }
-        public List<Segment> Segments { get; set; }
-        public PointCollection Points => GetPoints();
-
-        private PointCollection GetPoints()
+        public Ceiling()
         {
-            var points = new PointCollection();
-            points.Add(Point.Zero);
-            foreach (var segment in Segments)
-            {
-                points.Add(segment.EndPoint);
-            }
-            return points;
+            Scheme = new SchemeCeiling();
         }
+
+        public SchemeCeiling Scheme { get; set; }
+
+        public int Square { get; set; }
+        public int Perimeter { get; set; }
+        public int Price { get; set; }
     }
 }

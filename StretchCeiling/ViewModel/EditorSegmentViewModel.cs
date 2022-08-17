@@ -35,18 +35,18 @@ namespace StretchCeiling.ViewModel
         [ObservableProperty]
         private bool _hasPickerActive;
         [ObservableProperty]
-        public PointCollection _points;
+        private PointCollection _points;
         [ObservableProperty]
-        public List<string> _angles;
+        private List<string> _angles;
         [ObservableProperty]
-        public double _entrySegment;
+        private double _entrySegment;
         [ObservableProperty]
-        public ObservableCollection<Segment> _segments;
+        private ObservableCollection<Segment> _segments;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Segments = query[nameof(Segments)] as ObservableCollection<Segment>;
-            Points = query[nameof(Points)] as PointCollection;
+            _segments = query[nameof(Segments)] as ObservableCollection<Segment>;
+            _points = query[nameof(Points)] as PointCollection;
             SetAngle();
         }
 
