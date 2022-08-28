@@ -9,11 +9,18 @@ namespace StretchCeiling.ViewModel
 {
     public partial class BuilderViewModel : ObservableObject, IQueryAttributable
     {
+        private Ceiling _ceiling;
+
         [ObservableProperty] private PointCollection _points;
         [ObservableProperty] private ObservableCollection<Segment> _segments;
         [ObservableProperty] private double _perimeter;
         
-        private Ceiling _ceiling;
+        public BuilderViewModel()
+        {
+            _ceiling = new();
+            Segments = _ceiling.Scheme.Segments;
+            Points = _ceiling.Scheme.Points;
+        }
 
         [RelayCommand]
         private async void OpenEditorSegment()
@@ -35,23 +42,31 @@ namespace StretchCeiling.ViewModel
         }
 
         [RelayCommand]
+        private async Task GoBackAddCeiling()
+        {
+            AppShell.CeilingSerxice.AddCeiling(_ceiling);
+            await Shell.Current.GoToAsync("..");
+        }
+
+        [RelayCommand]
         private async Task GoBack()
         {
             if(_ceiling.Scheme.Segments.Count <= 0)
             {
                 _ceiling = null;
+                AppShell.CeilingSerxice.ClearEmptyCeilings(_ceiling);
             }
             await Shell.Current.GoToAsync("..");
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey(nameof(Ceiling)))
-            {
-                _ceiling = query[nameof(Ceiling)] as Ceiling;
-                Segments = _ceiling.Scheme.Segments;
-                Points = _ceiling.Scheme.Points;
-            }
+            //if (query.ContainsKey(nameof(Ceiling)))
+            //{
+            //    _ceiling = query[nameof(Ceiling)] as Ceiling;
+            //    Segments = _ceiling.Scheme.Segments;
+            //    Points = _ceiling.Scheme.Points;
+            //}
             if (query.ContainsKey("updated"))
             {
                 bool updated = (bool)query["updated"];

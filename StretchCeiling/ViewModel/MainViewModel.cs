@@ -25,16 +25,10 @@ namespace StretchCeiling.ViewModel
         }
 
         [RelayCommand]
-        private async Task Tap(string s)
-        {
-            await Shell.Current.GoToAsync($"{nameof(DetailPage)}?DetailText={s}");
-        }
-
-        [RelayCommand]
         private async Task BuildCeiling()
         {
             _lastCeiling = new Ceiling();            
-            _ceilings.Add(_lastCeiling);
+            //_ceilings.Add(_lastCeiling);
 
             var query = new Dictionary<string, object>
             {
@@ -44,11 +38,17 @@ namespace StretchCeiling.ViewModel
             await Shell.Current.GoToAsync(nameof(BuilderPage), query);
         }
 
-        [RelayCommand]
-        private void Delete(string s)
-        {
+        //[RelayCommand]
+        //private async Task Tap(string s)
+        //{
+        //    await Shell.Current.GoToAsync($"{nameof(DetailPage)}?DetailText={s}");
+        //}
+
+        //[RelayCommand]
+        //private void Delete(string s)
+        //{
             
-        }
+        //}
     }
 }
  
