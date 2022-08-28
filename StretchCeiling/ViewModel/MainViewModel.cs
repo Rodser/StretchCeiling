@@ -8,19 +8,20 @@ namespace StretchCeiling.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
+        private Ceiling _lastCeiling;
+
         public MainViewModel()
         {
-            _ceilings = AppShell.s_ceilings;
+            _ceilings = AppShell.CeilingSerxice.GetCeilings();
         }
 
         [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
         [ObservableProperty] private string price;
 
-        private Ceiling _lastCeiling;
-
         [RelayCommand]
-        private void Add()
+        private async void Add()
         {
+            await Shell.Current.GoToAsync(nameof(DetailPage));
         }
 
         [RelayCommand]

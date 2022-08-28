@@ -21,6 +21,14 @@
             <Button Text="Добавить Сторону" 
                     Command="{Binding OpenEditorSegmentCommand}" />
         </Frame>
+        <StackLayout>
+            <Label Text="S = 10.45"
+                   FontSize="22"
+                   TextColor="{StaticResource Blue200Accent}"/>
+            <Label Text="{Binding Perimeter, StringFormat='P = {0:F2}'}"
+                   FontSize="22"
+                   TextColor="{StaticResource Blue100Accent}"/>
+        </StackLayout>
         <Frame BackgroundColor="{StaticResource Gray200}">
             
                 <ListView ItemsSource="{Binding Segments}" 

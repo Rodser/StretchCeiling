@@ -13,35 +13,16 @@ namespace StretchCeiling.ViewModel
             Angles = GetListAngels(_standartAngles.Angles);            
         }
 
-        private void SetAngle()
-        {
-            if (Segments.Count > 0)
-            {
-                OnSelectAngle = _selectedAngleDefault;
-                HasPickerActive = true;
-            }
-            else
-            {
-                OnSelectAngle = _selectedFirstAngleDefault;
-                HasPickerActive = false;
-            }
-        }
-
         private readonly StandartAngles _standartAngles;
         private readonly string _selectedFirstAngleDefault = "0";
         private readonly string _selectedAngleDefault = "90";
-        [ObservableProperty]
-        private string _onSelectAngle;
-        [ObservableProperty]
-        private bool _hasPickerActive;
-        [ObservableProperty]
-        private PointCollection _points;
-        [ObservableProperty]
-        private List<string> _angles;
-        [ObservableProperty]
-        private double _entrySegment;
-        [ObservableProperty]
-        private ObservableCollection<Segment> _segments;
+
+        [ObservableProperty] private string _onSelectAngle;
+        [ObservableProperty] private bool _hasPickerActive;
+        [ObservableProperty] private PointCollection _points;
+        [ObservableProperty] private List<string> _angles;
+        [ObservableProperty] private double _entrySegment;
+        [ObservableProperty] private ObservableCollection<Segment> _segments;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
@@ -67,7 +48,14 @@ namespace StretchCeiling.ViewModel
             var segment = new Segment(Points, EntrySegment, angle);
             Segments.Add(segment);
 
-            await Shell.Current.GoToAsync("..");
+            bool updated = true;
+
+            var query = new Dictionary<string, object>
+            {
+                {"updated", updated }
+            };
+
+            await Shell.Current.GoToAsync("..", query);
         }
 
         [RelayCommand]
@@ -91,6 +79,20 @@ namespace StretchCeiling.ViewModel
                 list.Add(item.Degrees.ToString());
             }
             return list;
+        }
+
+        private void SetAngle()
+        {
+            if (Segments.Count > 0)
+            {
+                OnSelectAngle = _selectedAngleDefault;
+                HasPickerActive = true;
+            }
+            else
+            {
+                OnSelectAngle = _selectedFirstAngleDefault;
+                HasPickerActive = false;
+            }
         }
     }
 }

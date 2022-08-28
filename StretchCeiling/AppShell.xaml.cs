@@ -1,22 +1,19 @@
-﻿using StretchCeiling.Model;
+﻿using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
-using System.Collections.ObjectModel;
 
 namespace StretchCeiling;
 
 public partial class AppShell : Shell
 {
-    public static ObservableCollection<Ceiling> s_ceilings;
+    public static CeilingService CeilingSerxice { get; set; }
 
     public AppShell()
 	{
 		InitializeComponent();
+        CeilingSerxice = new CeilingService();
 
-		Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
+        Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
         Routing.RegisterRoute(nameof(BuilderPage), typeof(BuilderPage));
         Routing.RegisterRoute(nameof(EditorSegmentPage), typeof(EditorSegmentPage));
-
-
-        s_ceilings = new ObservableCollection<Ceiling>();
     }
 }

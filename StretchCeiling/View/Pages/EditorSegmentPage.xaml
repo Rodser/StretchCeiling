@@ -2,14 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
+             xmlns:cv="clr-namespace:StretchCeiling.Converter"
              x:DataType="vm:EditorSegmentViewModel"
              x:Class="StretchCeiling.View.Pages.EditorSegmentPage"
              Title="EditorSegmentPage">
+
+    <ContentPage.Resources>
+        <cv:AngleConverter x:Key="angleConverter" />
+    </ContentPage.Resources>
+    
     <VerticalStackLayout>
         <Frame BackgroundColor="{StaticResource Gray500}">
             <HorizontalStackLayout Spacing="5"
                                    VerticalOptions="Center">
-                <Picker ItemsSource="{Binding Angles}" 
+                <Picker ItemsSource="{Binding Angles}"                        
                         IsEnabled="{Binding HasPickerActive}"
                         VerticalTextAlignment="Center" 
                         HorizontalTextAlignment="Center"

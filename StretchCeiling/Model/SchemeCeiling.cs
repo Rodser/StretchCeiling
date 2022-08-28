@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Rodser.Library;
+using System.Collections.ObjectModel;
 
 namespace StretchCeiling.Model
 {
@@ -25,6 +26,26 @@ namespace StretchCeiling.Model
                 points.Add(segment.EndPoint);
             }
             return points;
+        }
+
+        public double GetPerimeter()
+        {
+            double p = 0.0;
+            if (Segments.Count > 0)
+            {
+                foreach (var segment in Segments)
+                {
+                    p += segment.Distance;
+                }
+                if (Segments.Count > 1)
+                {
+                    var a = Segments[0].StartPoint;
+                    var b = Segments[^1].EndPoint;
+                    
+                    p += Geometry.Distance(a.X, a.Y, b.X, b.Y);
+                }
+            }
+            return p;
         }
     }
 }
