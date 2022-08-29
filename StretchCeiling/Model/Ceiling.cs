@@ -26,10 +26,15 @@ namespace StretchCeiling.Model
         public double Square { get; set; }
         public double Perimeter { get; set; }
         public double Price { get; set; }
+
         private Component cloth;
         private Component profile;
 
 
+        internal void RefreshPrice()
+        {
+            Price = GetPrice();
+        }
 
         private double GetPrice()
         {
@@ -38,9 +43,16 @@ namespace StretchCeiling.Model
             return squ + prm;
         }
 
-        internal void RefreshPrice()
+        internal double GetPerimeter()
         {
-            Price = GetPrice();
+            Perimeter = Scheme.GetPerimeter();
+            return Perimeter;
+        }
+
+        internal double GetSquare()
+        {
+            Square = Perimeter * 2;
+            return Square;
         }
     }
 }

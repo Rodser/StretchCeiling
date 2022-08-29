@@ -14,13 +14,15 @@ namespace StretchCeiling.ViewModel
         [ObservableProperty] private PointCollection _points;
         [ObservableProperty] private ObservableCollection<Segment> _segments;
         [ObservableProperty] private double _perimeter;
-        
+        [ObservableProperty] private double _square;
+
         public BuilderViewModel()
         {
             _ceiling = new();
             Segments = _ceiling.Scheme.Segments;
             Points = _ceiling.Scheme.Points;
             Perimeter = _ceiling.Perimeter;
+            Square = _ceiling.Square;
         }
 
         [RelayCommand]
@@ -45,7 +47,10 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task GoBackAddCeiling()
         {
-            AppShell.CeilingSerxice.AddCeiling(_ceiling);
+            if (Segments.Count > 0)
+            {
+                AppShell.CeilingSerxice.AddCeiling(_ceiling);
+            }
             await Shell.Current.GoToAsync("..");
         }
 
@@ -62,7 +67,8 @@ namespace StretchCeiling.ViewModel
                 bool updated = (bool)query["updated"];
                 if (updated)
                 {
-                    _ceiling.Perimeter = _ceiling.Scheme.GetPerimeter();
+                    Perimeter = _ceiling.GetPerimeter();
+                    Square = _ceiling.GetSquare();
                     _ceiling.RefreshPrice();
                 }
             }

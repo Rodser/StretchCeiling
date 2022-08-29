@@ -66,7 +66,7 @@
                                  StrokeThickness="3" 
                                  Stroke="{StaticResource Gray600}"/>
                             <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"  Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Square}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Square, StringFormat='S = {0:F2} m2'}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
                             <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="{Binding Price, StringFormat='{0:F2} руб.'}" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
                             <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
                         </Grid>                        
