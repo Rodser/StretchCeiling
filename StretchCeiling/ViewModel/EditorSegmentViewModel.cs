@@ -7,15 +7,15 @@ namespace StretchCeiling.ViewModel
 {
     public partial class EditorSegmentViewModel : ObservableObject, IQueryAttributable
     {
+        private readonly StandartAngles _standartAngles;
+        private readonly string _selectedFirstAngleDefault = "0";
+        private readonly string _selectedAngleDefault = "90";
+     
         public EditorSegmentViewModel()
         {
             _standartAngles = new StandartAngles();
             Angles = GetListAngels(_standartAngles.Angles);            
         }
-
-        private readonly StandartAngles _standartAngles;
-        private readonly string _selectedFirstAngleDefault = "0";
-        private readonly string _selectedAngleDefault = "90";
 
         [ObservableProperty] private string _onSelectAngle;
         [ObservableProperty] private bool _hasPickerActive;

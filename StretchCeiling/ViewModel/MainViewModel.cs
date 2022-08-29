@@ -27,15 +27,7 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task BuildCeiling()
         {
-            _lastCeiling = new Ceiling();            
-            //_ceilings.Add(_lastCeiling);
-
-            var query = new Dictionary<string, object>
-            {
-                { nameof(Ceiling), _lastCeiling }
-            };
-
-            await Shell.Current.GoToAsync(nameof(BuilderPage), query);
+            await Shell.Current.GoToAsync(nameof(BuilderPage));
         }
 
         //[RelayCommand]

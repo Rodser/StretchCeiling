@@ -51,22 +51,11 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task GoBack()
         {
-            if(_ceiling.Scheme.Segments.Count <= 0)
-            {
-                _ceiling = null;
-                AppShell.CeilingSerxice.ClearEmptyCeilings(_ceiling);
-            }
             await Shell.Current.GoToAsync("..");
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            //if (query.ContainsKey(nameof(Ceiling)))
-            //{
-            //    _ceiling = query[nameof(Ceiling)] as Ceiling;
-            //    Segments = _ceiling.Scheme.Segments;
-            //    Points = _ceiling.Scheme.Points;
-            //}
             if (query.ContainsKey("updated"))
             {
                 bool updated = (bool)query["updated"];
