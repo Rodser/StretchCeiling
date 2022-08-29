@@ -24,21 +24,25 @@
             
             <CollectionView ItemsSource="{Binding Ceilings}">
                 <CollectionView.EmptyView>
-                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*,Auto">
+                    <Grid RowDefinitions="Auto,Auto,Auto" 
+                          ColumnDefinitions="Auto,*,Auto"
+                              MaximumHeightRequest="100">
                         <Polygon Grid.Row="0" 
-                                 Grid.Column="0" 
+                                 Grid.Column="1" 
                                  Grid.RowSpan="2" 
                                  HeightRequest="60" 
                                  WidthRequest="60"  
-                                 Margin="0,5,0,0" 
+                                     MaximumHeightRequest="60"  
+                                     MaximumWidthRequest="60"    
+                                 Margin="5" 
                                  Points="0 0, 0 100, 50 50" 
                                  Aspect="Uniform" 
                                  Fill="{StaticResource Gray100}"
                                  StrokeThickness="3" 
                                  Stroke="{StaticResource Gray600}"/>
-                        <Label Grid.Row="0" Grid.Column="1" Text="Name" Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
-                        <Label Grid.Row="1" Grid.Column="1" Text="M2" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
-                        <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="1000" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="Adress" Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="100 M2" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
+                        <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="50 000 rub." VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
                         <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
                     </Grid>
                     
@@ -50,7 +54,7 @@
                               MaximumHeightRequest="80">
                             <Polygon Grid.Row="0" 
                                  Grid.Column="1" 
-                                 Grid.RowSpan="1" 
+                                 Grid.RowSpan="2" 
                                  HeightRequest="60" 
                                      MaximumHeightRequest="60"  
                                      MaximumWidthRequest="60"                                    
@@ -62,8 +66,8 @@
                                  StrokeThickness="3" 
                                  Stroke="{StaticResource Gray600}"/>
                             <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"  Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Perimeter}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
-                            <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="{Binding Price}" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Square}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
+                            <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="{Binding Price, StringFormat='{0:F2} руб.'}" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
                             <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
                         </Grid>                        
                     </DataTemplate>

@@ -20,6 +20,7 @@ namespace StretchCeiling.ViewModel
             _ceiling = new();
             Segments = _ceiling.Scheme.Segments;
             Points = _ceiling.Scheme.Points;
+            Perimeter = _ceiling.Perimeter;
         }
 
         [RelayCommand]
@@ -61,7 +62,8 @@ namespace StretchCeiling.ViewModel
                 bool updated = (bool)query["updated"];
                 if (updated)
                 {
-                    Perimeter = _ceiling.Scheme.GetPerimeter();
+                    _ceiling.Perimeter = _ceiling.Scheme.GetPerimeter();
+                    _ceiling.RefreshPrice();
                 }
             }
         }
