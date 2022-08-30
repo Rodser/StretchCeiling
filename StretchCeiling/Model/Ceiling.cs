@@ -51,7 +51,7 @@ namespace StretchCeiling.Model
 
         internal double GetSquare()
         {
-            Square = Perimeter * 2;
+            Square = Scheme.GetSquare();
             return Square;
         }
     }

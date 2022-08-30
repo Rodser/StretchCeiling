@@ -1,4 +1,4 @@
-﻿using Rodser.Library;
+﻿using Rodser;
 using System.Collections.ObjectModel;
 
 namespace StretchCeiling.Model
@@ -7,8 +7,8 @@ namespace StretchCeiling.Model
     {
         public SchemeCeiling()
         {
-            Segments = new ();
-            Points = new ()
+            Segments = new();
+            Points = new()
             {
                 Point.Zero
             };
@@ -41,11 +41,24 @@ namespace StretchCeiling.Model
                 {
                     var a = Segments[0].StartPoint;
                     var b = Segments[^1].EndPoint;
-                    
+
                     p += Geometry.Distance(a.X, a.Y, b.X, b.Y);
                 }
             }
             return p;
+        }
+
+        internal double GetSquare()
+        {
+            List<Vertex> vertexes = new();
+
+            foreach (var point in Points)
+            {
+                Vertex vertex = new(point.X, point.Y);
+                vertexes.Add(vertex);
+            }
+
+            return Geometry.GetGaussSquare(vertexes);
         }
     }
 }

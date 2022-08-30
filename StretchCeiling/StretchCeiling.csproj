@@ -58,7 +58,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Rodser.Library\Rodser.Library.csproj" />
+	  <ProjectReference Include="..\..\Rodser.Library\Rodser.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
