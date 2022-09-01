@@ -1,5 +1,4 @@
-﻿
-namespace StretchCeiling.Model
+﻿namespace StretchCeiling.Model
 {
     public class Order
     {
@@ -10,6 +9,5 @@ namespace StretchCeiling.Model
         public int CallNumber { get; set; }
         public DateTime DateTime { get => dateTime; set => dateTime = value; }
         public float Price { get; set; }
-
     }
 }

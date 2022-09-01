@@ -1,10 +1,10 @@
-﻿
-namespace StretchCeiling.Model
+﻿namespace StretchCeiling.Model
 {
     public class Angle
     {
         public double Radian { get; set; }
         public double Degrees { get; set; }
+        public string DegreesString => Degrees.ToString();
 
         public Angle(double angle)
         {
@@ -28,6 +28,11 @@ namespace StretchCeiling.Model
         private static double GetRadian(double angle)
         {
             return angle * Math.PI / 180;
+        }
+
+        public override string ToString()
+        {
+            return Degrees.ToString();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace StretchCeiling.Model
+﻿namespace StretchCeiling.Model
 {
     public class Segment 
     {

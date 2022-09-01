@@ -7,20 +7,15 @@ namespace StretchCeiling.ViewModel
 {
     public partial class EditorSegmentViewModel : ObservableObject, IQueryAttributable
     {
-        private readonly StandartAngles _standartAngles;
-        private readonly string _selectedFirstAngleDefault = "0";
-        private readonly string _selectedAngleDefault = "90";
-     
         public EditorSegmentViewModel()
         {
-            _standartAngles = new StandartAngles();
-            Angles = GetListAngels(_standartAngles.Angles);            
+            Angles = GetListAngels();
         }
 
-        [ObservableProperty] private string _onSelectAngle;
+        [ObservableProperty] private Angle _onSelectAngle;
         [ObservableProperty] private bool _hasPickerActive;
         [ObservableProperty] private PointCollection _points;
-        [ObservableProperty] private List<string> _angles;
+        [ObservableProperty] private List<Angle> _angles;
         [ObservableProperty] private double _entrySegment;
         [ObservableProperty] private ObservableCollection<Segment> _segments;
 
@@ -34,7 +29,7 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async void AddSegment()
         {
-            var angle = new Angle(double.Parse(OnSelectAngle ?? "0"));
+            var angle = OnSelectAngle ?? new Angle(AngleStandart.Zero); 
             if (Segments.Count > 0)
             {
                 angle.SetValueDegrees(Segments[^1].Angle);
@@ -71,26 +66,30 @@ namespace StretchCeiling.ViewModel
             return new Point(newX, newY);
         }
 
-        private static List<string> GetListAngels(List<Angle> defaultAngles)
+        private static List<Angle> GetListAngels()
         {
-            var list = new List<string>();
-            foreach (var item in defaultAngles)
+            var angles = new List<Angle>
             {
-                list.Add(item.Degrees.ToString());
-            }
-            return list;
+                new Angle(AngleStandart.InternalAngle45),
+                new Angle(AngleStandart.InternalAngle90),
+                new Angle(AngleStandart.InternalAngle135),
+                new Angle(AngleStandart.ExternalAngle135),
+                new Angle(AngleStandart.ExternalAngle90),
+                new Angle(AngleStandart.ExternalAngle45),
+            };
+            return angles;
         }
 
         private void SetAngle()
         {
             if (Segments.Count > 0)
             {
-                OnSelectAngle = _selectedAngleDefault;
+                OnSelectAngle = new Angle(AngleStandart.InternalAngle90);
                 HasPickerActive = true;
             }
             else
             {
-                OnSelectAngle = _selectedFirstAngleDefault;
+                OnSelectAngle = new Angle(AngleStandart.Zero);
                 HasPickerActive = false;
             }
         }
