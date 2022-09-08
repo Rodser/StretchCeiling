@@ -8,15 +8,13 @@ namespace StretchCeiling.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        private Ceiling _lastCeiling;
-
         public MainViewModel()
         {
             _ceilings = AppShell.CeilingSerxice.GetCeilings();
         }
 
         [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
-        [ObservableProperty] private string price;
+       // [ObservableProperty] private string price;
 
         [RelayCommand]
         private async void Add()
@@ -25,30 +23,22 @@ namespace StretchCeiling.ViewModel
         }
 
         [RelayCommand]
-        private async Task Tap(string s)
-        {
-            await Shell.Current.GoToAsync($"{nameof(DetailPage)}?DetailText={s}");
-        }
-
-        [RelayCommand]
         private async Task BuildCeiling()
         {
-            _lastCeiling = new Ceiling();            
-            _ceilings.Add(_lastCeiling);
-
-            var query = new Dictionary<string, object>
-            {
-                { nameof(Ceiling), _lastCeiling }
-            };
-
-            await Shell.Current.GoToAsync(nameof(BuilderPage), query);
+            await Shell.Current.GoToAsync(nameof(BuilderPage));
         }
 
-        [RelayCommand]
-        private void Delete(string s)
-        {
+        //[RelayCommand]
+        //private async Task Tap(string s)
+        //{
+        //    await Shell.Current.GoToAsync($"{nameof(DetailPage)}?DetailText={s}");
+        //}
+
+        //[RelayCommand]
+        //private void Delete(string s)
+        //{
             
-        }
+        //}
     }
 }
  

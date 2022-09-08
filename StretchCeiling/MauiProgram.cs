@@ -24,8 +24,8 @@ public static class MauiProgram
         builder.Services.AddTransient<EditorSegmentPage>()
                         .AddTransient<EditorSegmentViewModel>();
         builder.Services.AddTransient<CeilingViewModel>();
-        builder.Services.AddTransient<DetailPage>()
-                        .AddTransient<DetailViewModel>();
+        builder.Services.AddTransient<ComponentPage>()
+                        .AddTransient<ComponentViewModel>();
 
         return builder.Build();
 	}

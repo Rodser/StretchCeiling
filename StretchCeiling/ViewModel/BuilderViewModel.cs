@@ -9,11 +9,23 @@ namespace StretchCeiling.ViewModel
 {
     public partial class BuilderViewModel : ObservableObject, IQueryAttributable
     {
+        private readonly Ceiling _ceiling;
+
         [ObservableProperty] private PointCollection _points;
         [ObservableProperty] private ObservableCollection<Segment> _segments;
         [ObservableProperty] private double _perimeter;
-        
-        private Ceiling _ceiling;
+        [ObservableProperty] private double _square;
+        [ObservableProperty] private ObservableCollection<Component> _components;
+
+        public BuilderViewModel()
+        {
+            _ceiling = new();
+            Segments = _ceiling.Scheme.Segments;
+            Points = _ceiling.Scheme.Points;
+            Perimeter = _ceiling.Perimeter;
+            Square = _ceiling.Square;
+            _components = _ceiling.Components;
+        }
 
         [RelayCommand]
         private async void OpenEditorSegment()
@@ -35,29 +47,41 @@ namespace StretchCeiling.ViewModel
         }
 
         [RelayCommand]
+        private async Task GoBackAddCeiling()
+        {
+            if (Segments.Count > 0)
+            {
+                AppShell.CeilingSerxice.AddCeiling(_ceiling);
+            }
+            await Shell.Current.GoToAsync("..");
+        }
+
+        [RelayCommand]
+        private async Task AddComponent()
+        {
+            var query = new Dictionary<string, object>
+            {
+                { nameof(Ceiling), _ceiling }
+            };
+            await Shell.Current.GoToAsync(nameof(ComponentPage), query);
+        }
+
+        [RelayCommand]
         private async Task GoBack()
         {
-            if(_ceiling.Scheme.Segments.Count <= 0)
-            {
-                _ceiling = null;
-            }
             await Shell.Current.GoToAsync("..");
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey(nameof(Ceiling)))
-            {
-                _ceiling = query[nameof(Ceiling)] as Ceiling;
-                Segments = _ceiling.Scheme.Segments;
-                Points = _ceiling.Scheme.Points;
-            }
             if (query.ContainsKey("updated"))
             {
                 bool updated = (bool)query["updated"];
                 if (updated)
                 {
-                    Perimeter = _ceiling.Scheme.GetPerimeter();
+                    Perimeter = _ceiling.GetPerimeter();
+                    Square = _ceiling.GetSquare();
+                    _ceiling.RefreshPrice();
                 }
             }
         }

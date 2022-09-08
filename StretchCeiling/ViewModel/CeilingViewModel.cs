@@ -8,7 +8,7 @@ namespace StretchCeiling.ViewModel
         [ObservableProperty] public PointCollection _points;
         [ObservableProperty] private string name;
         [ObservableProperty] private double perimeter;
-        [ObservableProperty] private string price;
+        [ObservableProperty] private double price;
         [ObservableProperty] private double square;
 
     }

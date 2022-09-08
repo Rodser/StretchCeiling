@@ -12,7 +12,7 @@ public partial class AppShell : Shell
 		InitializeComponent();
         CeilingSerxice = new CeilingService();
 
-        Routing.RegisterRoute(nameof(DetailPage), typeof(DetailPage));
+        Routing.RegisterRoute(nameof(ComponentPage), typeof(ComponentPage));
         Routing.RegisterRoute(nameof(BuilderPage), typeof(BuilderPage));
         Routing.RegisterRoute(nameof(EditorSegmentPage), typeof(EditorSegmentPage));
     }

@@ -1,21 +1,23 @@
-﻿
-namespace StretchCeiling.Model
+﻿namespace StretchCeiling.Model
 {
     public class Angle
     {
         public double Radian { get; set; }
         public double Degrees { get; set; }
+        public string DegreesString { get; set; }
 
         public Angle(double angle)
         {
             Degrees = angle;
             Radian = GetRadian(Degrees);
+            DegreesString = Degrees.ToString();
         }
 
         public Angle(AngleStandart angleStandart)
         {
             Degrees = (int)angleStandart;
             Radian = GetRadian(Degrees);
+            DegreesString = Degrees.ToString();
         }
 
         internal void SetValueDegrees(Angle angle)

@@ -6,43 +6,70 @@
              x:DataType="vm:BuilderViewModel"
              Title="BuilderPage">
 
-    <VerticalStackLayout Padding="10" BackgroundColor="{StaticResource Gray600}">
-        <Frame BackgroundColor="{StaticResource Gray200}"
-               HeightRequest="390"
+    <VerticalStackLayout Padding="10" Spacing="5" BackgroundColor="{StaticResource Gray600}">
+        <Grid>
+            <Frame Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="3" BackgroundColor="{StaticResource Gray200}"
+               HeightRequest="350"
                MinimumHeightRequest="300"
                MinimumWidthRequest="100">
-            <Polygon Aspect="Uniform" 
+
+                <Polygon Aspect="Uniform" 
                      Points="{Binding Points}"
-                     Fill="{StaticResource Gray100}"
-                     StrokeThickness="3" 
-                     Stroke="{StaticResource Gray600}"/>
-        </Frame>
-        <Frame>
-            <Button Text="Добавить Сторону" 
+                     StrokeThickness="3" />
+            </Frame>
+            
+            <Grid  
+                  ColumnDefinitions="*, *" 
+                  RowDefinitions="*,50" 
+                  Margin="5">
+
+                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Square, StringFormat='S = {0:F2} m2'}"
+                   FontSize="22"
+                   TextColor="{StaticResource LimeDark}"/>
+                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Perimeter, StringFormat='P = {0:F2} m'}"
+                   FontSize="22"
+                   TextColor="{StaticResource LimeDark}"/>
+            </Grid>
+        </Grid>
+
+        <Button Text="Добавить Сторону" 
                     Command="{Binding OpenEditorSegmentCommand}" />
-        </Frame>
-        <StackLayout>
-            <Label Text="S = 10.45"
-                   FontSize="22"
-                   TextColor="{StaticResource Blue200Accent}"/>
-            <Label Text="{Binding Perimeter, StringFormat='P = {0:F2}'}"
-                   FontSize="22"
-                   TextColor="{StaticResource Blue100Accent}"/>
-        </StackLayout>
+
         <Frame BackgroundColor="{StaticResource Gray200}">
-            
-                <ListView ItemsSource="{Binding Segments}" 
-                          MaximumHeightRequest="160"
-                          MinimumHeightRequest="100">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding .}"/>
-                       </DataTemplate>
-                   </ListView.ItemTemplate>
-                </ListView>
-            
+            <ListView ItemsSource="{Binding Segments}"
+                          MaximumHeightRequest="120"
+                          MinimumHeightRequest="40">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding .}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Frame>
-        <Button Text="GoBack"                   
+
+        <Button Text="Добавить Комплектующие" 
+                    Command="{Binding AddComponentCommand}"/>
+        
+        <Frame BackgroundColor="{StaticResource Gray200}">
+            <ListView ItemsSource="{Binding Components}"                      
+                          MaximumHeightRequest="120"
+                          MinimumHeightRequest="40">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:ComponentViewModel">
+                        
+                            <TextCell Text="{Binding Name}" Detail="{Binding Count}"/>                  
+                       
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+        
+        <HorizontalStackLayout Margin="5">
+            <Button Text="Применить"                   
+                Command="{Binding GoBackAddCeilingCommand}"/>
+
+            <Button Text="Отиенить"                   
                 Command="{Binding GoBackCommand}"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

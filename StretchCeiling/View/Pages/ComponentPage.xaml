@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
+             x:Class="StretchCeiling.View.Pages.ComponentPage"
+             x:DataType="vm:ComponentViewModel"
+             Title="ComponentPage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Well"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry Text="{Binding Name}"
+               Keyboard="Default"
+                Placeholder="Name"/>
+        <Entry Text="{Binding Price}"
+               Keyboard="Numeric"
+                Placeholder="Price"/>
+        <Entry Text="{Binding Measure}"
+               Keyboard="Text"
+                Placeholder="Measure"/>
+        <Entry Text="{Binding Count}"
+               Keyboard="Numeric"
+                Placeholder="Count"/>
+        <Button Text="Add" 
+                Command="{Binding AddComponentCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>
