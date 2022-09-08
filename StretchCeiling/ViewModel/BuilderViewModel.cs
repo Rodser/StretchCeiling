@@ -9,12 +9,13 @@ namespace StretchCeiling.ViewModel
 {
     public partial class BuilderViewModel : ObservableObject, IQueryAttributable
     {
-        private Ceiling _ceiling;
+        private readonly Ceiling _ceiling;
 
         [ObservableProperty] private PointCollection _points;
         [ObservableProperty] private ObservableCollection<Segment> _segments;
         [ObservableProperty] private double _perimeter;
         [ObservableProperty] private double _square;
+        [ObservableProperty] private ObservableCollection<Component> _components;
 
         public BuilderViewModel()
         {
@@ -23,6 +24,7 @@ namespace StretchCeiling.ViewModel
             Points = _ceiling.Scheme.Points;
             Perimeter = _ceiling.Perimeter;
             Square = _ceiling.Square;
+            _components = _ceiling.Components;
         }
 
         [RelayCommand]
@@ -52,6 +54,16 @@ namespace StretchCeiling.ViewModel
                 AppShell.CeilingSerxice.AddCeiling(_ceiling);
             }
             await Shell.Current.GoToAsync("..");
+        }
+
+        [RelayCommand]
+        private async Task AddComponent()
+        {
+            var query = new Dictionary<string, object>
+            {
+                { nameof(Ceiling), _ceiling }
+            };
+            await Shell.Current.GoToAsync(nameof(ComponentPage), query);
         }
 
         [RelayCommand]

@@ -13,9 +13,11 @@ namespace StretchCeiling.ViewModel
         }
 
         [ObservableProperty] private Angle _onSelectAngle;
+        [ObservableProperty] private int selectAngleIndex;
+        [ObservableProperty] private string _degreesStr;
         [ObservableProperty] private bool _hasPickerActive;
         [ObservableProperty] private PointCollection _points;
-        [ObservableProperty] private List<Angle> _angles;
+        [ObservableProperty] private ObservableCollection<Angle> _angles;
         [ObservableProperty] private double _entrySegment;
         [ObservableProperty] private ObservableCollection<Segment> _segments;
 
@@ -66,9 +68,9 @@ namespace StretchCeiling.ViewModel
             return new Point(newX, newY);
         }
 
-        private static List<Angle> GetListAngels()
+        private static ObservableCollection<Angle> GetListAngels()
         {
-            var angles = new List<Angle>
+            var angles = new ObservableCollection<Angle>
             {
                 new Angle(AngleStandart.InternalAngle45),
                 new Angle(AngleStandart.InternalAngle90),
@@ -85,6 +87,7 @@ namespace StretchCeiling.ViewModel
             if (Segments.Count > 0)
             {
                 OnSelectAngle = new Angle(AngleStandart.InternalAngle90);
+                SelectAngleIndex = 1;
                 HasPickerActive = true;
             }
             else

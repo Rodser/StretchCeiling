@@ -35,14 +35,12 @@
                                      MaximumHeightRequest="60"  
                                      MaximumWidthRequest="60"    
                                  Margin="5" 
-                                 Points="0 0, 0 100, 50 50" 
+                                 Points="0 0, 0 50, 100 50, 100 0" 
                                  Aspect="Uniform" 
-                                 Fill="{StaticResource Gray100}"
-                                 StrokeThickness="3" 
-                                 Stroke="{StaticResource Gray600}"/>
+                                 StrokeThickness="3" />
                         <Label Grid.Row="0" Grid.Column="1" Text="Adress" Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
-                        <Label Grid.Row="1" Grid.Column="1" Text="100 M2" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
-                        <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="50 000 rub." VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="00 M2" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
+                        <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="000 rub." VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
                         <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
                     </Grid>
                     
@@ -62,9 +60,7 @@
                                  Margin="10" 
                                  Points="{Binding Points}" 
                                  Aspect="Uniform" 
-                                 Fill="{StaticResource Gray100}"
-                                 StrokeThickness="3" 
-                                 Stroke="{StaticResource Gray600}"/>
+                                 StrokeThickness="3" />
                             <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}"  Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
                             <Label Grid.Row="1" Grid.Column="1" Text="{Binding Square, StringFormat='S = {0:F2} m2'}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
                             <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="{Binding Price, StringFormat='{0:F2} руб.'}" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>

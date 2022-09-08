@@ -4,18 +4,20 @@
     {
         public double Radian { get; set; }
         public double Degrees { get; set; }
-        public string DegreesString => Degrees.ToString();
+        public string DegreesString { get; set; }
 
         public Angle(double angle)
         {
             Degrees = angle;
             Radian = GetRadian(Degrees);
+            DegreesString = Degrees.ToString();
         }
 
         public Angle(AngleStandart angleStandart)
         {
             Degrees = (int)angleStandart;
             Radian = GetRadian(Degrees);
+            DegreesString = Degrees.ToString();
         }
 
         internal void SetValueDegrees(Angle angle)
@@ -28,11 +30,6 @@
         private static double GetRadian(double angle)
         {
             return angle * Math.PI / 180;
-        }
-
-        public override string ToString()
-        {
-            return Degrees.ToString();
         }
     }
 }
