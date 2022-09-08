@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
              x:DataType="vm:EditorSegmentViewModel"
              x:Class="StretchCeiling.View.Pages.EditorSegmentPage"
-             Title="EditorSegmentPage">
+             NavigationPage.HasNavigationBar="False">
     
     <VerticalStackLayout VerticalOptions="Center">
         <Frame>

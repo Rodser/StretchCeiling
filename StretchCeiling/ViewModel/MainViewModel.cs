@@ -11,22 +11,23 @@ namespace StretchCeiling.ViewModel
         public MainViewModel()
         {
             _ceilings = AppShell.CeilingSerxice.GetCeilings();
+            _price = AppShell.CeilingSerxice.TotalPrice;
         }
 
         [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
-       // [ObservableProperty] private string price;
-
-        [RelayCommand]
-        private async void Add()
-        {
-            await Shell.Current.GoToAsync(nameof(DetailPage));
-        }
+        [ObservableProperty] private double _price;
 
         [RelayCommand]
         private async Task BuildCeiling()
         {
             await Shell.Current.GoToAsync(nameof(BuilderPage));
         }
+
+        //[RelayCommand]
+        //private async void Add()
+        //{
+        //    await Shell.Current.GoToAsync(nameof(DetailPage));
+        //}
 
         //[RelayCommand]
         //private async Task Tap(string s)

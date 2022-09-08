@@ -4,7 +4,7 @@
              x:Class="StretchCeiling.MainPage"
              xmlns:viewmodel="clr-namespace:StretchCeiling.ViewModel"
              x:DataType="viewmodel:MainViewModel"
-             Title="">
+             NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
         <VerticalStackLayout
@@ -71,8 +71,7 @@
             </CollectionView>
                         
             <Label
-                x:Name="OutLabel"
-                Text="0 руб"
+                Text="{Binding Price, StringFormat='{0:F2} руб.'}"
                 FontSize="18"
                 HorizontalOptions="Center" />
 
