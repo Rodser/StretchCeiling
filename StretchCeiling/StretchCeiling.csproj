@@ -15,7 +15,7 @@
 		<ApplicationTitle>StretchCeiling</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.stretchceiling</ApplicationId>
+		<ApplicationId>com.rodiox.stretchceiling</ApplicationId>
 		<ApplicationIdGuid>2D5D2BE1-90BC-4A0C-8262-9D44D5E97528</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -92,6 +92,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	</ItemGroup>
 

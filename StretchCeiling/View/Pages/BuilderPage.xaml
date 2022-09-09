@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
              x:Class="StretchCeiling.View.Pages.BuilderPage"
              x:DataType="vm:BuilderViewModel"
+             BackgroundColor="DarkGray"
              NavigationPage.HasNavigationBar="False">
 
     <ScrollView>
