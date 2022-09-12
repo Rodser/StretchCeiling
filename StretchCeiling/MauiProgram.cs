@@ -1,4 +1,5 @@
-﻿using StretchCeiling.View.Pages;
+﻿using CommunityToolkit.Maui;
+using StretchCeiling.View.Pages;
 using StretchCeiling.ViewModel;
 
 namespace StretchCeiling;
@@ -9,7 +10,9 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 
-		builder
+        builder.UseMauiApp<App>().UseMauiCommunityToolkit();
+
+        builder
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
@@ -17,15 +20,16 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-        builder.Services.AddSingleton<MainPage>()
-						.AddSingleton<MainViewModel>();
-        builder.Services.AddTransient<BuilderPage>()
-                        .AddTransient<BuilderViewModel>();
-        builder.Services.AddTransient<EditorSegmentPage>()
-                        .AddTransient<EditorSegmentViewModel>();
+        builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddTransient<ComponentPage>();
+        builder.Services.AddTransient<BuilderPage>();
+        builder.Services.AddTransient<EditorSegmentPage>();
+
+        builder.Services.AddSingleton<MainViewModel>();
+        builder.Services.AddTransient<BuilderViewModel>();
+        builder.Services.AddTransient<EditorSegmentViewModel>();
         builder.Services.AddTransient<CeilingViewModel>();
-        builder.Services.AddTransient<ComponentPage>()
-                        .AddTransient<ComponentViewModel>();
+        builder.Services.AddTransient<ComponentViewModel>();
 
         return builder.Build();
 	}

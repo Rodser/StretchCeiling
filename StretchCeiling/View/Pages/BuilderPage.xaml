@@ -4,8 +4,10 @@
              xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
              x:Class="StretchCeiling.View.Pages.BuilderPage"
              x:DataType="vm:BuilderViewModel"
-             Title="BuilderPage">
+             BackgroundColor="DarkGray"
+             NavigationPage.HasNavigationBar="False">
 
+    <ScrollView>
     <VerticalStackLayout Padding="10" Spacing="5" BackgroundColor="{StaticResource Gray600}">
         <Grid>
             <Frame Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="3" BackgroundColor="{StaticResource Gray200}"
@@ -36,15 +38,15 @@
                     Command="{Binding OpenEditorSegmentCommand}" />
 
         <Frame BackgroundColor="{StaticResource Gray200}">
-            <ListView ItemsSource="{Binding Segments}"
-                          MaximumHeightRequest="120"
-                          MinimumHeightRequest="40">
-                <ListView.ItemTemplate>
+            <CollectionView ItemsSource="{Binding Segments}" EmptyView="AB: __"
+                          MaximumHeightRequest="120" 
+                          MinimumHeightRequest="40"  >
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding .}"/>
+                        <Label Text="{Binding .}" />
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Frame>
 
         <Button Text="Добавить Комплектующие" 
@@ -71,5 +73,6 @@
             <Button Text="Отиенить"                   
                 Command="{Binding GoBackCommand}"/>
         </HorizontalStackLayout>
-    </VerticalStackLayout>
+    </VerticalStackLayout>        
+    </ScrollView>
 </ContentPage>

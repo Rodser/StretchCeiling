@@ -4,24 +4,38 @@
              xmlns:vm="clr-namespace:StretchCeiling.ViewModel"
              x:Class="StretchCeiling.View.Pages.ComponentPage"
              x:DataType="vm:ComponentViewModel"
-             Title="ComponentPage">
+             NavigationPage.HasNavigationBar="False">
     <VerticalStackLayout>
         <Label 
-            Text="Well"
+            Text="Component"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry Text="{Binding Name}"
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Name" HorizontalOptions="StartAndExpand"/>
+            <Entry Text="{Binding Name}" HorizontalOptions="CenterAndExpand"
                Keyboard="Default"
                 Placeholder="Name"/>
-        <Entry Text="{Binding Price}"
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Price" HorizontalOptions="StartAndExpand"/>
+            <Entry Text="{Binding Price}" HorizontalOptions="CenterAndExpand"
                Keyboard="Numeric"
                 Placeholder="Price"/>
-        <Entry Text="{Binding Measure}"
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Measure" HorizontalOptions="StartAndExpand"/>
+            <Entry Text="{Binding Measure}" HorizontalOptions="CenterAndExpand"
                Keyboard="Text"
                 Placeholder="Measure"/>
-        <Entry Text="{Binding Count}"
+        </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Count" HorizontalOptions="StartAndExpand"/>
+            <Entry Text="{Binding Count}" HorizontalOptions="CenterAndExpand"
                Keyboard="Numeric"
                 Placeholder="Count"/>
+        </HorizontalStackLayout>
+
         <Button Text="Add" 
                 Command="{Binding AddComponentCommand}"/>
     </VerticalStackLayout>

@@ -53,7 +53,11 @@ namespace StretchCeiling.ViewModel
             {
                 AppShell.CeilingSerxice.AddCeiling(_ceiling);
             }
-            await Shell.Current.GoToAsync("..");
+            var query = new Dictionary<string, object>
+            {
+                {"updated", true }
+            };
+            await Shell.Current.GoToAsync("..", query);
         }
 
         [RelayCommand]
