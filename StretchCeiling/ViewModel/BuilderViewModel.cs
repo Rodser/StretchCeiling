@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StretchCeiling.Model;
+using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
 using System.Collections.ObjectModel;
 
@@ -10,6 +11,7 @@ namespace StretchCeiling.ViewModel
     public partial class BuilderViewModel : ObservableObject, IQueryAttributable
     {
         private readonly Ceiling _ceiling;
+        private CeilingService _ceilingService;
 
         [ObservableProperty] private PointCollection _points;
         [ObservableProperty] private ObservableCollection<Segment> _segments;
@@ -51,7 +53,7 @@ namespace StretchCeiling.ViewModel
         {
             if (Segments.Count > 0)
             {
-                AppShell.CeilingSerxice.AddCeiling(_ceiling);
+                _ceilingService.AddCeiling(_ceiling);
             }
             var query = new Dictionary<string, object>
             {
@@ -78,6 +80,10 @@ namespace StretchCeiling.ViewModel
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
+            if (query.ContainsKey(nameof(CeilingService)))
+            {
+                _ceilingService = (CeilingService)query[nameof(CeilingService)];    
+            }
             if (query.ContainsKey("updated"))
             {
                 bool updated = (bool)query["updated"];
