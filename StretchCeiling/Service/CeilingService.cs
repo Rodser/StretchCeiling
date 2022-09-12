@@ -7,7 +7,7 @@ namespace StretchCeiling.Service
     {
         private readonly ObservableCollection<Ceiling> s_ceilings;
 
-        public double TotalPrice { get; private set; }
+        public double TotalPrice { get => GetPrice(); }
 
         public CeilingService()
         {
@@ -41,12 +41,14 @@ namespace StretchCeiling.Service
             s_ceilings.Remove(ceiling);
         }
 
-        private void GetPrice()
+        private double GetPrice()
         {
+            double price = 0;
             foreach (var ceiling in s_ceilings)
             {
-                TotalPrice += ceiling.Price;
+                price += ceiling.Price;
             }
+            return price;
         }
     }
 }

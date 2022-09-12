@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.ApplicationModel.DataTransfer;
 using StretchCeiling.Model;
 using StretchCeiling.View.Pages;
 using System.Collections.ObjectModel;
@@ -12,13 +11,11 @@ namespace StretchCeiling.ViewModel
         private double _price;
 
         [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
-
-        public double Price { get => _price; set { _price = value; SetProperty(ref _price, value); }  }
+        [ObservableProperty] public double price;
 
         public MainViewModel()
         {
             _ceilings = AppShell.CeilingSerxice.GetCeilings();
-            // _price = AppShell.CeilingSerxice.TotalPrice;
         }
 
         [RelayCommand]

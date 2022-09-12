@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
 using StretchCeiling.ViewModel;
 
@@ -30,6 +31,8 @@ public static class MauiProgram
         builder.Services.AddTransient<EditorSegmentViewModel>();
         builder.Services.AddTransient<CeilingViewModel>();
         builder.Services.AddTransient<ComponentViewModel>();
+
+        builder.Services.AddSingleton<CeilingService>();
 
         return builder.Build();
 	}
