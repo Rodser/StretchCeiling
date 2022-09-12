@@ -3,12 +3,21 @@
     x:Class="StretchCeiling.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:StretchCeiling"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:local="clr-namespace:StretchCeiling.View.Pages">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <MenuFlyoutItem Text="Menu" />
+
+    <FlyoutItem  Title="Home" Icon="hamburger.png">
+        <ShellContent ContentTemplate="{DataTemplate local:HomePage}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Orders" Icon="coffe.png">
+        <ShellContent ContentTemplate="{DataTemplate local:ListOrdersPage}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Components" Icon="juice.png">
+        <ShellContent ContentTemplate="{DataTemplate local:ListComponentsPage}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Info" Icon="pizza.png">
+        <ShellContent ContentTemplate="{DataTemplate local:InfoPage}"/>
+    </FlyoutItem>
 
 </Shell>

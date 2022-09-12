@@ -8,8 +8,6 @@ namespace StretchCeiling.ViewModel
 {
     public partial class MainViewModel : ObservableObject, IQueryAttributable
     {
-        private double _price;
-
         [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
         [ObservableProperty] public double price;
 
