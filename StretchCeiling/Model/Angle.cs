@@ -6,6 +6,10 @@
         public double Degrees { get; set; }
         public string DegreesString { get; set; }
 
+        public Angle()
+        {
+        }
+
         public Angle(double angle)
         {
             Degrees = angle;

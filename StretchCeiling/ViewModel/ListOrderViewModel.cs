@@ -1,18 +1,49 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StretchCeiling.Model;
+using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class ListOrderViewModel : ObservableObject
+    public partial class ListOrderViewModel : BaseViewModel
     {
-        [ObservableProperty] private ObservableCollection<Order> orders;
+        private readonly OrderService _orderService;
+        [ObservableProperty] private ObservableCollection<Order> _orders;
 
-        public ListOrderViewModel()
+        public ListOrderViewModel(OrderService orderService)
         {
-            orders = AppShell.OrderService.GetOrders();
+            _orderService = orderService;
+            _ = Refresh();
+        }
+
+        [RelayCommand]
+        private async Task Refresh()
+        {
+            await GetOrdersAsync();
+        }
+
+        private async Task GetOrdersAsync()
+        {
+            if (IsBusy)
+                return;
+
+            try
+            {
+                IsBusy = true;
+                Orders = await _orderService.GetOrders();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unable to get monkeys: {ex.Message}");
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         [RelayCommand]
@@ -22,6 +53,7 @@ namespace StretchCeiling.ViewModel
             var query = new Dictionary<string, object>
             {
                 { nameof(Order), order},
+                { nameof(OrderService), _orderService}
             };
             await Shell.Current.GoToAsync(nameof(OrderPage), query);
         }

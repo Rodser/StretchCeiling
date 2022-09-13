@@ -4,6 +4,9 @@
     {
         private readonly PointCollection _points;
 
+        public Segment()
+        {
+        }
         public Segment(PointCollection points, double distance, Angle angle)
         {
             _points = points;

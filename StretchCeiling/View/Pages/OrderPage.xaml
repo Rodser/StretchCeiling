@@ -6,10 +6,6 @@
              x:Class="StretchCeiling.View.Pages.OrderPage"
              x:DataType="viewmodel:OrderViewModel"
              NavigationPage.HasNavigationBar="False">
-
-    <ContentPage.BindingContext>
-        <viewmodel:OrderViewModel/>
-    </ContentPage.BindingContext>
     
     <ScrollView>
         <VerticalStackLayout

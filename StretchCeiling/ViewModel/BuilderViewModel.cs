@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class BuilderViewModel : ObservableObject, IQueryAttributable
+    public partial class BuilderViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly Ceiling _ceiling;
         private CeilingService _ceilingService;
@@ -70,12 +70,6 @@ namespace StretchCeiling.ViewModel
                 { nameof(Ceiling), _ceiling }
             };
             await Shell.Current.GoToAsync(nameof(ComponentPage), query);
-        }
-
-        [RelayCommand]
-        private async Task GoBack()
-        {
-            await Shell.Current.GoToAsync("..");
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)

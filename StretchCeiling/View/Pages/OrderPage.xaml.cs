@@ -1,9 +1,13 @@
-namespace StretchCeiling.View.Pages;
+using StretchCeiling.ViewModel;
 
-public partial class OrderPage : ContentPage
+namespace StretchCeiling.View.Pages
 {
-	public OrderPage()
+	public partial class OrderPage : ContentPage
 	{
-		InitializeComponent();
+		public OrderPage(OrderViewModel orderViewModel)
+		{
+			InitializeComponent();
+			BindingContext = orderViewModel;
+		}
 	}
 }

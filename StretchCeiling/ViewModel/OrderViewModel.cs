@@ -7,8 +7,9 @@ using System.Collections.ObjectModel;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class OrderViewModel : ObservableObject, IQueryAttributable
+    public partial class OrderViewModel : BaseViewModel, IQueryAttributable
     {
+        private OrderService _orderService;
         private CeilingService _ceilingService;
         private Order _order;
 
@@ -32,7 +33,7 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task GoBackAddOrder()
         {
-            AppShell.OrderService.AddOrder(_order);
+             await _orderService.AddOrder(_order);
 
             var query = new Dictionary<string, object>
             {
@@ -41,16 +42,11 @@ namespace StretchCeiling.ViewModel
             await Shell.Current.GoToAsync("..", query);
         }
 
-        [RelayCommand]
-        private async Task GoBack()
-        {
-            await Shell.Current.GoToAsync("..");
-        }
-
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (query.ContainsKey(nameof(Order)))
             {
+                _orderService = (OrderService)query[nameof(OrderService)];
                 _order = (Order)query[nameof(Order)];
                 _ceilingService = new CeilingService(_order);
             }

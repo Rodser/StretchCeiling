@@ -1,11 +1,13 @@
 ﻿using StretchCeiling.Model;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 
 namespace StretchCeiling.Service
 {
     public class OrderService
     {
-        private readonly ObservableCollection<Order> _orders;
+        private const string ORDER_DATA = "orderdata.json";
+        private ObservableCollection<Order> _orders;
 
         public OrderService()
         {
@@ -16,8 +18,12 @@ namespace StretchCeiling.Service
         /// Получить коллекцию
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<Order> GetOrders()
+        public async Task<ObservableCollection<Order>> GetOrders()
         {
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            using var reader = new StreamReader($"{appData}/{ORDER_DATA}");
+            var contents = await reader.ReadToEndAsync();
+            _orders = JsonSerializer.Deserialize<ObservableCollection<Order>>(contents);
             return _orders;
         }
 
@@ -25,9 +31,13 @@ namespace StretchCeiling.Service
         /// Дообавляет новый
         /// </summary>
         /// <param name="order"></param>
-        internal void AddOrder(Order order)
+        internal async Task AddOrder(Order order)
         {
             _orders.Add(order);
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            using var writer = new StreamWriter($"{ appData }/{ ORDER_DATA}");
+            var contents = JsonSerializer.Serialize(_orders);
+            await writer.WriteAsync(contents);
         }
 
         /// <summary>
