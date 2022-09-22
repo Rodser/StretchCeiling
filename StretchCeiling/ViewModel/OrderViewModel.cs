@@ -57,6 +57,7 @@ namespace StretchCeiling.ViewModel
                 {
                     Ceilings = _ceilingService.GetCeilings();
                     Price = _ceilingService.TotalPrice;
+                    _order.Price = Price;
                 }
             }
         }

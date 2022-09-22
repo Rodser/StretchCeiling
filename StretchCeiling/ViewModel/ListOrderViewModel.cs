@@ -57,5 +57,18 @@ namespace StretchCeiling.ViewModel
             };
             await Shell.Current.GoToAsync(nameof(OrderPage), query);
         }
+
+        [RelayCommand]
+        private async Task DeleteOrderAsync(Order selected)
+        {
+            var x = await Shell.Current.DisplayActionSheet("o bosse", "NO", "Realy delete this order?");
+            if (x== "Realy delete this order?")
+            {
+                await _orderService.DeleteOrder(selected);
+                
+            
+                //Orders = await _orderService.GetOrders();
+            }
+        }
     }
 }

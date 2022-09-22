@@ -13,7 +13,7 @@
     <FlyoutItem Title="Orders" Icon="coffe.png">
         <ShellContent ContentTemplate="{DataTemplate local:ListOrdersPage}"/>
     </FlyoutItem>
-    <FlyoutItem Title="Components" Icon="juice.png">
+    <FlyoutItem Title="Components" Icon="hamburger.png">
         <ShellContent ContentTemplate="{DataTemplate local:ListComponentsPage}"/>
     </FlyoutItem>
     <FlyoutItem Title="Info" Icon="pizza.png">

@@ -41,11 +41,16 @@ namespace StretchCeiling.Service
         }
 
         /// <summary>
-        /// Удаляет пустой слот
+        /// Удаляет
         /// </summary>
-        internal void ClearEmptyOrder(Order order)
+        /// <param name="order"></param>
+        internal async Task DeleteOrder(Order order)
         {
             _orders.Remove(order);
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            using var writer = new StreamWriter($"{appData}/{ORDER_DATA}");
+            var contents = JsonSerializer.Serialize(_orders);
+            await writer.WriteAsync(contents);
         }
     }
 }

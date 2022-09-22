@@ -8,6 +8,6 @@ namespace StretchCeiling.Model
         public ObservableCollection<Ceiling> Ceilings { get; set; }
         public int CallNumber { get; set; }
         public DateTime DateTime { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
     }
 }
