@@ -1,13 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using StretchCeiling.Domain;
 
 namespace StretchCeiling.Model
 {
-    public class Order
+    public class Order : IOrder
     {
-        public string Address { get; set; }
-        public ObservableCollection<Ceiling> Ceilings { get; set; }
+        public string Address { get; set; } = "Samara";
+        public List<ICeiling> Cillings { get; set; }
         public int CallNumber { get; set; }
+        public float Price { get; set; }
         public DateTime DateTime { get; set; }
-        public double Price { get; set; }
     }
 }

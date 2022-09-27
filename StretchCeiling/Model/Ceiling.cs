@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using StretchCeiling.Domain;
 
 namespace StretchCeiling.Model
 {
-    public class Ceiling
+    public class Ceiling : ICeiling
     {
         private Component _cloth;
         private Component _profile;

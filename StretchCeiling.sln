@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StretchCeiling", "StretchCeiling\StretchCeiling.csproj", "{481576B6-0D53-4D36-8ED0-D0CE7F2D7338}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StretchCeiling.Domain", "StretchCeiling.Domain\StretchCeiling.Domain.csproj", "{8BC94B1D-DD68-42A8-B4C9-B8B79F649D99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{481576B6-0D53-4D36-8ED0-D0CE7F2D7338}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{481576B6-0D53-4D36-8ED0-D0CE7F2D7338}.Release|Any CPU.Build.0 = Release|Any CPU
 		{481576B6-0D53-4D36-8ED0-D0CE7F2D7338}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{8BC94B1D-DD68-42A8-B4C9-B8B79F649D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BC94B1D-DD68-42A8-B4C9-B8B79F649D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BC94B1D-DD68-42A8-B4C9-B8B79F649D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BC94B1D-DD68-42A8-B4C9-B8B79F649D99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
