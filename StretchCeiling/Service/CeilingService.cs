@@ -5,13 +5,18 @@ namespace StretchCeiling.Service
 {
     public class CeilingService
     {
-        private readonly ObservableCollection<Ceiling> s_ceilings;
+        private readonly ObservableCollection<Ceiling> _ceilings;
 
-        public double TotalPrice { get; private set; }
+        public double TotalPrice { get => GetPrice(); }
 
-        public CeilingService()
+        public CeilingService(Order order)
         {
-            s_ceilings = new ObservableCollection<Ceiling>();
+            var ceilings = order.Ceilings;
+            if(ceilings is null)
+            {
+                ceilings = new ObservableCollection<Ceiling>();
+            }
+            _ceilings = ceilings;
         }
 
         /// <summary>
@@ -20,7 +25,7 @@ namespace StretchCeiling.Service
         /// <returns></returns>
         public ObservableCollection<Ceiling> GetCeilings()
         {
-            return s_ceilings;
+            return _ceilings;
         }
 
         /// <summary>
@@ -29,7 +34,7 @@ namespace StretchCeiling.Service
         /// <param name="ceiling"></param>
         internal void AddCeiling(Ceiling ceiling)
         {
-            s_ceilings.Add(ceiling);
+            _ceilings.Add(ceiling);
             GetPrice();
         }
 
@@ -38,15 +43,17 @@ namespace StretchCeiling.Service
         /// </summary>
         internal void ClearEmptyCeilings(Ceiling ceiling)
         {
-            s_ceilings.Remove(ceiling);
+            _ceilings.Remove(ceiling);
         }
 
-        private void GetPrice()
+        private double GetPrice()
         {
-            foreach (var ceiling in s_ceilings)
+            double price = 0;
+            foreach (var ceiling in _ceilings)
             {
-                TotalPrice += ceiling.Price;
+                price += ceiling.Price;
             }
+            return price;
         }
     }
 }

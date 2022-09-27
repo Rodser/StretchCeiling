@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class EditorSegmentViewModel : ObservableObject, IQueryAttributable
+    public partial class EditorSegmentViewModel : BaseViewModel, IQueryAttributable
     {
         public EditorSegmentViewModel()
         {
@@ -53,12 +53,6 @@ namespace StretchCeiling.ViewModel
             };
 
             await Shell.Current.GoToAsync("..", query);
-        }
-
-        [RelayCommand]
-        private async Task GoBack()
-        {
-            await Shell.Current.GoToAsync("..");
         }
 
         private Point CreatePoint(double distance, Angle angle)

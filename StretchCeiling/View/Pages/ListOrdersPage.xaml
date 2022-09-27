@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StretchCeiling.View.Pages.ListOrdersPage"
+             xmlns:viewmodel="clr-namespace:StretchCeiling.ViewModel"             
+             xmlns:model="clr-namespace:StretchCeiling.Model"
+             x:DataType="viewmodel:ListOrderViewModel"
+             NavigationPage.HasNavigationBar="False">
+
+    <RefreshView Command="{Binding RefreshCommand}">
+        <ScrollView>
+            <VerticalStackLayout MinimumWidthRequest="300"
+                                 MinimumHeightRequest="600"
+            Spacing="10"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+                <Label
+                Text="Orders"
+                FontSize="22"
+                HorizontalOptions="Center" />
+                <Button
+                Text="Заказs"
+                HorizontalOptions="Center"
+                Command="{Binding RefreshCommand}"/>
+
+                <CollectionView ItemsSource="{Binding Orders}">
+                    <CollectionView.EmptyView>
+                        <Grid RowDefinitions="Auto,Auto,Auto" 
+                          ColumnDefinitions="Auto,*,Auto"
+                              MaximumHeightRequest="100">
+                            <Polygon Grid.Row="0" 
+                                 Grid.Column="1" 
+                                 Grid.RowSpan="2" 
+                                 HeightRequest="60" 
+                                 WidthRequest="60"  
+                                     MaximumHeightRequest="60"  
+                                     MaximumWidthRequest="60"    
+                                 Margin="5" 
+                                 Points="0 0, 0 50, 100 50, 100 0" 
+                                 Aspect="Uniform" 
+                                 StrokeThickness="3" />
+                            <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="Adress" Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
+                            <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
+                        </Grid>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Order" >
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete"
+                                                   BackgroundColor="LightPink"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ListOrderViewModel}}, Path=DeleteOrderCommand}"
+                                                   CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Frame BackgroundColor="{StaticResource Blue300Accent}">
+                                    <Grid RowDefinitions="Auto,Auto,Auto" 
+                              ColumnDefinitions="Auto,*,Auto"  
+                              MaximumHeightRequest="80">
+                                        <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Address}"  Margin="0,5,0,0" FontAttributes="Bold" FontSize="16" TextColor="Silver"/>
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding CallNumber}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
+                                        <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="{Binding Price, StringFormat='{0:F2} руб.'}" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+                                        <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
+                                    </Grid>
+                                </Frame>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button
+                Text="Новый Заказ"
+                HorizontalOptions="Center"
+                Command="{Binding AddOrderCommand}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>
