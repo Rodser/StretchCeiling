@@ -1,29 +1,29 @@
-﻿using StretchCeiling.Model;
+﻿using StretchCeiling.Domain;
+using StretchCeiling.Model;
 using System.Collections.ObjectModel;
 
 namespace StretchCeiling.Service
 {
     public class CeilingService
     {
-        private readonly ObservableCollection<Ceiling> _ceilings;
+        private readonly List<Ceiling> _ceilings;
 
         public double TotalPrice { get => GetPrice(); }
 
         public CeilingService(Order order)
-        {
-            var ceilings = order.Ceilings;
-            if(ceilings is null)
+        {            
+            _ceilings = order.Ceilings;
+            if (_ceilings is null)
             {
-                ceilings = new ObservableCollection<Ceiling>();
+                _ceilings = new List<Ceiling>();
             }
-            _ceilings = ceilings;
         }
 
         /// <summary>
         /// Получить коллекцию потолков
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<Ceiling> GetCeilings()
+        public List<Ceiling> GetCeilings()
         {
             return _ceilings;
         }

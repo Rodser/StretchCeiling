@@ -14,11 +14,7 @@ namespace StretchCeiling.ViewModel
         private Order _order;
 
         [ObservableProperty] public double _price;
-        [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
-
-        public OrderViewModel()
-        {
-        }
+        [ObservableProperty] private List<Ceiling> _ceilings;
 
         [RelayCommand]
         private async Task BuildCeiling()
@@ -48,8 +44,9 @@ namespace StretchCeiling.ViewModel
             {
                 _orderService = (OrderService)query[nameof(OrderService)];
                 _order = (Order)query[nameof(Order)];
-                _ceilingService = new CeilingService(_order);
+                _ceilingService = (CeilingService)query[nameof(CeilingService)];
             }
+
             if (query.ContainsKey("updated"))
             {
                 bool updated = (bool)query["updated"];

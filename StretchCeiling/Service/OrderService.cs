@@ -7,23 +7,23 @@ namespace StretchCeiling.Service
     public class OrderService
     {
         private const string ORDER_DATA = "orderdata.json";
-        private ObservableCollection<Order> _orders;
+        private List<Order> _orders;
 
         public OrderService()
         {
-            _orders = new ObservableCollection<Order>();
+            _orders = new List<Order>();
         }
 
         /// <summary>
         /// Получить коллекцию
         /// </summary>
         /// <returns></returns>
-        public async Task<ObservableCollection<Order>> GetOrders()
+        public async Task<List<Order>> GetOrders()
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             using var reader = new StreamReader($"{appData}/{ORDER_DATA}");
             var contents = await reader.ReadToEndAsync();
-            _orders = JsonSerializer.Deserialize<ObservableCollection<Order>>(contents);
+            _orders = JsonSerializer.Deserialize<List<Order>>(contents);
             return _orders;
         }
 

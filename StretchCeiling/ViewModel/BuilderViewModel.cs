@@ -55,11 +55,11 @@ namespace StretchCeiling.ViewModel
             {
                 _ceilingService.AddCeiling(_ceiling);
             }
-            var query = new Dictionary<string, object>
+            var queryUpdate = new Dictionary<string, object>
             {
                 {"updated", true }
             };
-            await Shell.Current.GoToAsync("..", query);
+            await Shell.Current.GoToAsync("..", queryUpdate);
         }
 
         [RelayCommand]
