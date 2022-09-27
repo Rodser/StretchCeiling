@@ -1,27 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StretchCeiling.MainPage"
              xmlns:viewmodel="clr-namespace:StretchCeiling.ViewModel"
-             x:DataType="viewmodel:MainViewModel"
+             xmlns:model="clr-namespace:StretchCeiling.Model"
+             x:Class="StretchCeiling.View.Pages.OrderPage"
+             x:DataType="viewmodel:OrderViewModel"
              NavigationPage.HasNavigationBar="False">
-
+    
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="StartAndExpand"
+            Spacing="20">
+
+            <HorizontalStackLayout Margin="5">
+                <Button Text="Применить"                   
+                Command="{Binding GoBackAddOrderCommand}"/>
+
+                <Button Text="Отиенить"                   
+                Command="{Binding GoBackCommand}"/>
+            </HorizontalStackLayout>
 
             <Label
-                Text="Stretch Ceiling"
-                FontSize="32"
+                Text="Adress"
+                FontSize="20"
                 HorizontalOptions="Center" />
-            
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="100"
+            <Label
+                Text="Telefon"
+                FontSize="20"
                 HorizontalOptions="Center" />
-            
+
+
             <CollectionView ItemsSource="{Binding Ceilings}">
                 <CollectionView.EmptyView>
                     <Grid RowDefinitions="Auto,Auto,Auto" 
@@ -43,10 +51,10 @@
                         <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="000 rub." VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
                         <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
                     </Grid>
-                    
                 </CollectionView.EmptyView>
+                
                 <CollectionView.ItemTemplate >
-                    <DataTemplate x:DataType="viewmodel:CeilingViewModel" >
+                    <DataTemplate x:DataType="model:Ceiling" >
                         <Grid RowDefinitions="Auto,Auto,Auto" 
                               ColumnDefinitions="Auto,*,Auto"  
                               MaximumHeightRequest="80">
@@ -65,11 +73,11 @@
                             <Label Grid.Row="1" Grid.Column="1" Text="{Binding Square, StringFormat='S = {0:F2} m2'}" FontAttributes="Bold" FontSize="16" VerticalOptions="End" Margin="0,0,0,5"/>
                             <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="{Binding Price, StringFormat='{0:F2} руб.'}" VerticalOptions="Center" FontSize="18" FontAttributes="Bold"/>
                             <Line  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" X1="260" StrokeThickness="0.5" Stroke="Silver"/>
-                        </Grid>                        
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-                        
+
             <Label
                 Text="{Binding Price, StringFormat='{0:F2} руб.'}"
                 FontSize="18"
@@ -79,7 +87,6 @@
                 Text="Построить"
                 HorizontalOptions="Center"
                 Command="{Binding BuildCeilingCommand}"/>
-
         </VerticalStackLayout>
     </ScrollView>
 

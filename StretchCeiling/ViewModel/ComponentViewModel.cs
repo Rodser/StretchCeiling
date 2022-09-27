@@ -4,7 +4,7 @@ using StretchCeiling.Model;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class ComponentViewModel : ObservableObject, IQueryAttributable
+    public partial class ComponentViewModel : BaseViewModel, IQueryAttributable
     {
         private Ceiling _ceiling;
         private Component _component;

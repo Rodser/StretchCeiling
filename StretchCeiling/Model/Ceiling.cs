@@ -12,6 +12,7 @@ namespace StretchCeiling.Model
         public SchemeCeiling Scheme { get; set; }
         public PointCollection Points => Scheme.Points;
 
+        public string Name { get; set; }
         public double Square { get; set; }
         public double Perimeter { get; set; }
         public double Price { get; set; }
