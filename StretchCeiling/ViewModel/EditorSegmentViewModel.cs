@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StretchCeiling.Domain;
+using StretchCeiling.Domain.Model;
 using StretchCeiling.Model;
+using StretchCeiling.Service.Arithmetic;
 using System.Collections.ObjectModel;
 
 namespace StretchCeiling.ViewModel
@@ -12,37 +15,37 @@ namespace StretchCeiling.ViewModel
             Angles = GetListAngels();
         }
 
-        [ObservableProperty] private Angle _onSelectAngle;
+        [ObservableProperty] private IAngle _onSelectAngle;
         [ObservableProperty] private int selectAngleIndex;
         [ObservableProperty] private string _degreesStr;
         [ObservableProperty] private bool _hasPickerActive;
-        [ObservableProperty] private PointCollection _points;
-        [ObservableProperty] private ObservableCollection<Angle> _angles;
+        [ObservableProperty] private List<IVertex> _points;
+        [ObservableProperty] private List<IAngle> _angles;
         [ObservableProperty] private double _entrySegment;
-        [ObservableProperty] private ObservableCollection<Segment> _segments;
+        [ObservableProperty] private List<ISide> _segments;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            _segments = query[nameof(Segments)] as ObservableCollection<Segment>;
-            _points = query[nameof(Points)] as PointCollection;
+            _segments = query[nameof(Segments)] as List<ISide>;
+            _points = query[nameof(Points)] as List<IVertex>;
             SetAngle();
         }
 
         [RelayCommand]
         private async void AddSegment()
         {
-            var angle = OnSelectAngle ?? new Angle(AngleStandart.Zero); 
+            Angle angle = (Angle)OnSelectAngle ?? new Angle(AngleStandart.Zero); 
             if (Segments.Count > 0)
             {
-                angle.SetValueDegrees(Segments[^1].Angle);
+                angle.SetValueDegrees((Angle)Segments[^1].Angle);
             }
             if (EntrySegment <= 0)
             {
                 return;
             }
-            var point = CreatePoint(EntrySegment, angle);
+            Vertex point = CreatePoint(EntrySegment, angle);
             Points.Add(point);
-            var segment = new Segment(Points, EntrySegment, angle);
+            var segment = new Side(Points, EntrySegment, angle);
             Segments.Add(segment);
 
             bool updated = true;
@@ -55,16 +58,16 @@ namespace StretchCeiling.ViewModel
             await Shell.Current.GoToAsync("..", query);
         }
 
-        private Point CreatePoint(double distance, Angle angle)
+        private Vertex CreatePoint(double distance, Angle angle)
         {
             var newX = distance * Math.Cos(angle.Radian) + Points[^1].X;
             var newY = distance * Math.Sin(angle.Radian) + Points[^1].Y;
-            return new Point(newX, newY);
+            return new Vertex(newX, newY);
         }
 
-        private static ObservableCollection<Angle> GetListAngels()
+        private static List<IAngle> GetListAngels()
         {
-            var angles = new ObservableCollection<Angle>
+            var angles = new List<IAngle>
             {
                 new Angle(AngleStandart.InternalAngle45),
                 new Angle(AngleStandart.InternalAngle90),

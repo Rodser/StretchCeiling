@@ -1,6 +1,8 @@
-﻿namespace StretchCeiling.Service.Arithmetic
+﻿using StretchCeiling.Domain.Model;
+
+namespace StretchCeiling.Service.Arithmetic
 {
-    public struct Vertex
+    public struct Vertex : IVertex
     {
         public double X { get; set; }
         public double Y { get; set; }

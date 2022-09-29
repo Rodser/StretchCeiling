@@ -7,7 +7,7 @@ namespace StretchCeiling.ViewModel
     public partial class ComponentViewModel : BaseViewModel, IQueryAttributable
     {
         private Ceiling _ceiling;
-        private Component _component;
+        private Equipment _component;
 
         [ObservableProperty] private string _name;
         [ObservableProperty] private string _measure;

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StretchCeiling.Domain;
 using StretchCeiling.Model;
 using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
@@ -14,7 +15,7 @@ namespace StretchCeiling.ViewModel
         private Order _order;
 
         [ObservableProperty] public double _price;
-        [ObservableProperty] private List<Ceiling> _ceilings;
+        [ObservableProperty] private List<ICeiling> _ceilings;
 
         [RelayCommand]
         private async Task BuildCeiling()

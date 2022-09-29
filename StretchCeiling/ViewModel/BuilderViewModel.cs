@@ -1,8 +1,11 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StretchCeiling.Domain;
+using StretchCeiling.Domain.Model;
 using StretchCeiling.Model;
 using StretchCeiling.Service;
+using StretchCeiling.Service.Arithmetic;
 using StretchCeiling.View.Pages;
 using System.Collections.ObjectModel;
 
@@ -13,20 +16,20 @@ namespace StretchCeiling.ViewModel
         private readonly Ceiling _ceiling;
         private CeilingService _ceilingService;
 
-        [ObservableProperty] private PointCollection _points;
-        [ObservableProperty] private ObservableCollection<Segment> _segments;
+        [ObservableProperty] private List<IVertex> _points;
+        [ObservableProperty] private List<ISide> _segments;
         [ObservableProperty] private double _perimeter;
         [ObservableProperty] private double _square;
-        [ObservableProperty] private ObservableCollection<Component> _components;
+        [ObservableProperty] private List<IEquipment> _equipments;
 
         public BuilderViewModel()
         {
             _ceiling = new();
-            Segments = _ceiling.Scheme.Segments;
+            Segments = _ceiling.Scheme.Sides;
             Points = _ceiling.Scheme.Points;
             Perimeter = _ceiling.Perimeter;
             Square = _ceiling.Square;
-            _components = _ceiling.Components;
+            _equipments = _ceiling.Equipments;
         }
 
         [RelayCommand]
@@ -45,7 +48,7 @@ namespace StretchCeiling.ViewModel
         {
             Points.Clear();
             Segments.Clear();
-            Points.Add(Point.Zero);
+            Points.Add(new Vertex(0,0));
         }
 
         [RelayCommand]

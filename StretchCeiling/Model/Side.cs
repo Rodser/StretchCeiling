@@ -1,13 +1,17 @@
-﻿namespace StretchCeiling.Model
-{
-    public class Segment 
-    {
-        private readonly PointCollection _points;
+﻿using StretchCeiling.Domain;
+using StretchCeiling.Domain.Model;
 
-        public Segment()
+namespace StretchCeiling.Model
+{
+    public class Side : ISide
+    {
+        private readonly List<IVertex> _points;
+
+        public Side()
         {
         }
-        public Segment(PointCollection points, double distance, Angle angle)
+
+        public Side(List<IVertex> points, double distance, Angle angle)
         {
             _points = points;
             StartPoint = _points[_points.Count - 2];
@@ -19,13 +23,13 @@
             Description = $"{StartName}{EndName}";
         }
 
-        public Point StartPoint { get; set; }
-        public Point EndPoint { get; set; }
+        public IVertex StartPoint { get; set; }
+        public IVertex EndPoint { get; set; }
         public string StartName { get; set; }
         public string EndName { get; set; }
         public string Description { get; set; }
         public double Distance { get; set; }
-        public Angle Angle { get; set; }
+        public IAngle Angle { get; set; }
 
         private string GetNameOfPoint(int index)
         {

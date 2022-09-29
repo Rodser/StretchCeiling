@@ -6,7 +6,7 @@ namespace StretchCeiling.Service
 {
     public class CeilingService
     {
-        private readonly List<Ceiling> _ceilings;
+        private readonly List<ICeiling> _ceilings;
 
         public double TotalPrice { get => GetPrice(); }
 
@@ -15,7 +15,7 @@ namespace StretchCeiling.Service
             _ceilings = order.Ceilings;
             if (_ceilings is null)
             {
-                _ceilings = new List<Ceiling>();
+                _ceilings = new List<ICeiling>();
             }
         }
 
@@ -23,7 +23,7 @@ namespace StretchCeiling.Service
         /// Получить коллекцию потолков
         /// </summary>
         /// <returns></returns>
-        public List<Ceiling> GetCeilings()
+        public List<ICeiling> GetCeilings()
         {
             return _ceilings;
         }

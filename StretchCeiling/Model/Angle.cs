@@ -1,6 +1,8 @@
-﻿namespace StretchCeiling.Model
+﻿using StretchCeiling.Domain;
+
+namespace StretchCeiling.Model
 {
-    public class Angle
+    public class Angle : IAngle
     {
         public double Radian { get; set; }
         public double Degrees { get; set; }

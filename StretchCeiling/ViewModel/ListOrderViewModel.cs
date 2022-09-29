@@ -9,7 +9,6 @@ namespace StretchCeiling.ViewModel
     public partial class ListOrderViewModel : BaseViewModel
     {
         private readonly OrderService _orderService;
-        private CeilingService _ceilingService;
 
         [ObservableProperty] private List<Order> _orders;
 
@@ -66,9 +65,6 @@ namespace StretchCeiling.ViewModel
             if (x== "Realy delete this order?")
             {
                 await _orderService.DeleteOrder(selected);
-                
-            
-                //Orders = await _orderService.GetOrders();
             }
         }
     }
