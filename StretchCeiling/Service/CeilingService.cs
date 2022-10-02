@@ -1,21 +1,21 @@
-﻿using StretchCeiling.Domain;
+﻿using StretchCeiling.Domain.Model;
+using StretchCeiling.Helper;
 using StretchCeiling.Model;
-using System.Collections.ObjectModel;
 
 namespace StretchCeiling.Service
 {
     public class CeilingService
     {
-        private readonly List<ICeiling> _ceilings;
+        private readonly List<Ceiling> _ceilings;
 
         public double TotalPrice { get => GetPrice(); }
 
         public CeilingService(Order order)
         {            
-            _ceilings = order.Ceilings;
+            _ceilings = ModelConverter<Ceiling, ICeiling>.ToModel(order.Ceilings);
             if (_ceilings is null)
             {
-                _ceilings = new List<ICeiling>();
+                _ceilings = new List<Ceiling>();
             }
         }
 
@@ -24,8 +24,8 @@ namespace StretchCeiling.Service
         /// </summary>
         /// <returns></returns>
         public List<ICeiling> GetCeilings()
-        {
-            return _ceilings;
+        {            
+            return ModelConverter<Ceiling, ICeiling>.FromModel(_ceilings);
         }
 
         /// <summary>

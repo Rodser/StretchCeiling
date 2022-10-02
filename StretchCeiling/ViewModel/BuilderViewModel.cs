@@ -1,13 +1,10 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using StretchCeiling.Domain;
 using StretchCeiling.Domain.Model;
 using StretchCeiling.Model;
 using StretchCeiling.Service;
-using StretchCeiling.Service.Arithmetic;
 using StretchCeiling.View.Pages;
-using System.Collections.ObjectModel;
 
 namespace StretchCeiling.ViewModel
 {
@@ -16,8 +13,8 @@ namespace StretchCeiling.ViewModel
         private readonly Ceiling _ceiling;
         private CeilingService _ceilingService;
 
-        [ObservableProperty] private List<IVertex> _points;
-        [ObservableProperty] private List<ISide> _segments;
+        [ObservableProperty] private PointCollection _points;
+        [ObservableProperty] private List<ISide> _sides;
         [ObservableProperty] private double _perimeter;
         [ObservableProperty] private double _square;
         [ObservableProperty] private List<IEquipment> _equipments;
@@ -25,8 +22,8 @@ namespace StretchCeiling.ViewModel
         public BuilderViewModel()
         {
             _ceiling = new();
-            Segments = _ceiling.Scheme.Sides;
-            Points = _ceiling.Scheme.Points;
+            Sides = _ceiling.Scheme.Sides;
+            Points = _ceiling.Points;
             Perimeter = _ceiling.Perimeter;
             Square = _ceiling.Square;
             _equipments = _ceiling.Equipments;
@@ -36,9 +33,8 @@ namespace StretchCeiling.ViewModel
         private async void OpenEditorSegment()
         {
             var query = new Dictionary<string, object>
-            {  
-                { nameof(Segments), Segments },
-                { nameof(Points), Points }
+            {
+                {nameof(Scheme), _ceiling.Scheme }
             };
             await Shell.Current.GoToAsync(nameof(EditorSegmentPage), query);
         }
@@ -47,14 +43,14 @@ namespace StretchCeiling.ViewModel
         private void ClearPoints(object sender)
         {
             Points.Clear();
-            Segments.Clear();
-            Points.Add(new Vertex(0,0));
+            Sides.Clear();
+            Points.Add(Point.Zero);
         }
 
         [RelayCommand]
         private async Task GoBackAddCeiling()
         {
-            if (Segments.Count > 0)
+            if (Sides.Count > 0)
             {
                 _ceilingService.AddCeiling(_ceiling);
             }
@@ -89,6 +85,7 @@ namespace StretchCeiling.ViewModel
                     Perimeter = _ceiling.GetPerimeter();
                     Square = _ceiling.GetSquare();
                     _ceiling.RefreshPrice();
+                    Points = _ceiling.Points;
                 }
             }
         }

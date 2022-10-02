@@ -1,4 +1,4 @@
-﻿namespace StretchCeiling.Domain
+﻿namespace StretchCeiling.Domain.Model
 {
     public interface IAngle
     {

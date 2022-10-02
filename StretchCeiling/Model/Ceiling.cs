@@ -1,5 +1,6 @@
-﻿using StretchCeiling.Domain;
-using StretchCeiling.Domain.Model;
+﻿using StretchCeiling.Domain.Model;
+using StretchCeiling.Helper;
+using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
@@ -9,12 +10,19 @@ namespace StretchCeiling.Model
         private Equipment _profile;
 
         public IScheme Scheme { get; set; }
-        public List<IVertex> Points => Scheme.Points;        
+        public PointCollection Points => Vertex.ToPointCollection(Scheme.Points);
+
         public List<IEquipment> Equipments { get; set; }
         public string Name { get; set; }
         public double Square { get; set; }
         public double Perimeter { get; set; }
         public double Price { get; set; }
+
+        public Ceiling(Scheme scheme, List<Equipment> equipments)
+        {
+            Scheme = scheme;
+            Equipments = ModelConverter<Equipment, IEquipment>.FromModel(equipments);
+        }    
 
         public Ceiling()
         {

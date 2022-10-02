@@ -11,6 +11,7 @@ namespace StretchCeiling.ViewModel
         private readonly OrderService _orderService;
 
         [ObservableProperty] private List<Order> _orders;
+        [ObservableProperty] private Order _selectedOrder;
 
         public ListOrderViewModel(OrderService orderService)
         {
@@ -45,10 +46,10 @@ namespace StretchCeiling.ViewModel
         }
 
         [RelayCommand]
-        private async Task AddOrder()
+        private async Task OpenOrder(Order order)
         {
-            Order order = new();
-            CeilingService ceilingService = new CeilingService(order);
+            order ??= new();
+            CeilingService ceilingService = new(order);
             var query = new Dictionary<string, object>
             {
                 { nameof(Order), order},

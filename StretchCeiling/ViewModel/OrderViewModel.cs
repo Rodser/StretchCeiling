@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using StretchCeiling.Domain;
+using StretchCeiling.Domain.Model;
 using StretchCeiling.Model;
 using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
-using System.Collections.ObjectModel;
 
 namespace StretchCeiling.ViewModel
 {
@@ -56,6 +55,7 @@ namespace StretchCeiling.ViewModel
                     Ceilings = _ceilingService.GetCeilings();
                     Price = _ceilingService.TotalPrice;
                     _order.Price = Price;
+                    _order.Ceilings = _ceilingService.GetCeilings();
                 }
             }
         }

@@ -1,6 +1,4 @@
-﻿using StretchCeiling.Domain.Model;
-
-namespace StretchCeiling.Domain
+﻿namespace StretchCeiling.Domain.Model
 {
     public interface ISide
     {

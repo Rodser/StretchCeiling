@@ -32,8 +32,8 @@ public static class MauiProgram
         builder.Services.AddTransient<BuilderPage>();
         builder.Services.AddTransient<EditorSegmentPage>();
 
-        builder.Services.AddTransient<OrderViewModel>();
         builder.Services.AddSingleton<ListOrderViewModel>();
+        builder.Services.AddTransient<OrderViewModel>();
         builder.Services.AddTransient<BuilderViewModel>();
         builder.Services.AddTransient<EditorSegmentViewModel>();
         builder.Services.AddTransient<CeilingViewModel>();

@@ -28,22 +28,5 @@ public partial class AppShell : Shell
     private void InitiaalizeOrders()
     {
         OrderService = new OrderService();
-        //Orders = new ObservableCollection<Order>
-        //{
-        //    new Order
-        //    {
-        //        Address = "Samara",
-        //        CallNumber = 789654321,
-        //        DateTime = DateTime.Now,
-        //        Cillings = new ObservableCollection<Ceiling>
-        //        {
-        //            new Ceiling
-        //            {
-        //                Price = 1000
-        //            }
-
-        //        }
-        //    }
-        //};
     }
 }

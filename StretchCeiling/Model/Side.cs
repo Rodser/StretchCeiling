@@ -1,27 +1,11 @@
-﻿using StretchCeiling.Domain;
-using StretchCeiling.Domain.Model;
+﻿using StretchCeiling.Domain.Model;
+using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
     public class Side : ISide
     {
         private readonly List<IVertex> _points;
-
-        public Side()
-        {
-        }
-
-        public Side(List<IVertex> points, double distance, Angle angle)
-        {
-            _points = points;
-            StartPoint = _points[_points.Count - 2];
-            StartName = GetNameOfPoint(_points.Count - 2);
-            EndPoint = _points[_points.Count - 1];
-            EndName = GetNameOfPoint(_points.Count - 1);
-            Distance = distance;
-            Angle = angle;
-            Description = $"{StartName}{EndName}";
-        }
 
         public IVertex StartPoint { get; set; }
         public IVertex EndPoint { get; set; }
@@ -31,6 +15,27 @@ namespace StretchCeiling.Model
         public double Distance { get; set; }
         public IAngle Angle { get; set; }
 
+        public Side() {}
+
+        public Side(Vertex startPoint, Vertex endPoint, Angle angle)
+        {
+            StartPoint = startPoint;
+            EndPoint = endPoint;
+            Angle = angle;
+        }
+
+        public Side(List<IVertex> points, double distance, Angle angle)
+        {
+            _points = points;
+            StartPoint = (Vertex) _points[_points.Count - 2];
+            StartName = GetNameOfPoint(_points.Count - 2);
+            EndPoint = (Vertex) _points[_points.Count - 1];
+            EndName = GetNameOfPoint(_points.Count - 1);
+            Distance = distance;
+            Angle = angle;
+            Description = $"{StartName}{EndName}";
+        }
+
         private string GetNameOfPoint(int index)
         {
             return Convert.ToChar(index + 65).ToString();
@@ -38,7 +43,7 @@ namespace StretchCeiling.Model
 
         public override string ToString()
         {
-            return $"{StartName}{EndName} : {Distance}";
+            return $"{StartName}{EndName} : {Distance} ";
         }
     }
 }

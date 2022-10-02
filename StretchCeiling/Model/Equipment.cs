@@ -1,4 +1,4 @@
-﻿using StretchCeiling.Domain;
+﻿using StretchCeiling.Domain.Model;
 
 namespace StretchCeiling.Model
 {

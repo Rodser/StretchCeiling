@@ -38,7 +38,7 @@
                     Command="{Binding OpenEditorSegmentCommand}" />
 
         <Frame BackgroundColor="{StaticResource Gray200}">
-            <CollectionView ItemsSource="{Binding Segments, StringFormat='{0} '}" EmptyView=" AB :  "
+            <CollectionView ItemsSource="{Binding Sides}" EmptyView=" AB :  "
                           MaximumHeightRequest="120" 
                           MinimumHeightRequest="40"  >
                     <CollectionView.ItemsLayout>
@@ -46,7 +46,9 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Label Text="{Binding .}"/>
+                            <Frame>                                
+                                <Label Text="{Binding .}"/>
+                            </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

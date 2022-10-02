@@ -1,11 +1,15 @@
-﻿using StretchCeiling.Domain;
-using StretchCeiling.Domain.Model;
+﻿using StretchCeiling.Domain.Model;
+using StretchCeiling.Helper;
 using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
     public class Scheme : IScheme
     {
+        public int Id { get; set; }
+        public List<ISide> Sides { get; set; }
+        public List<IVertex> Points { get; set; }
+
         public Scheme()
         {
             Sides = new();
@@ -15,9 +19,11 @@ namespace StretchCeiling.Model
             };
         }
 
-        public int Id { get; set; }
-        public List<ISide> Sides { get; set; }
-        public List<IVertex> Points { get; set; }
+        public Scheme(List<Side> sides, List<Vertex> points)
+        {
+            Sides = ModelConverter<Side, ISide>.FromModel(sides);
+            Points = ModelConverter<Vertex, IVertex>.FromModel(points);
+        }
 
         public List<IVertex> GetPoints()
         {
@@ -49,7 +55,7 @@ namespace StretchCeiling.Model
             return Geometry.ConvertCentimetersToMeters(perimeter);
         }
 
-        public double GetSquare() 
+        public double GetSquare()
         {
             List<Vertex> vertexes = new();
 

@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using StretchCeiling.Domain;
 using StretchCeiling.Domain.Model;
 using StretchCeiling.Model;
 using StretchCeiling.Service.Arithmetic;
-using System.Collections.ObjectModel;
 
 namespace StretchCeiling.ViewModel
 {
@@ -19,15 +17,13 @@ namespace StretchCeiling.ViewModel
         [ObservableProperty] private int selectAngleIndex;
         [ObservableProperty] private string _degreesStr;
         [ObservableProperty] private bool _hasPickerActive;
-        [ObservableProperty] private List<IVertex> _points;
+        [ObservableProperty] private Scheme _scheme;
         [ObservableProperty] private List<IAngle> _angles;
         [ObservableProperty] private double _entrySegment;
-        [ObservableProperty] private List<ISide> _segments;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            _segments = query[nameof(Segments)] as List<ISide>;
-            _points = query[nameof(Points)] as List<IVertex>;
+            _scheme = query[nameof(Scheme)] as Scheme;
             SetAngle();
         }
 
@@ -35,18 +31,20 @@ namespace StretchCeiling.ViewModel
         private async void AddSegment()
         {
             Angle angle = (Angle)OnSelectAngle ?? new Angle(AngleStandart.Zero); 
-            if (Segments.Count > 0)
+            
+            if (_scheme.Sides.Count > 0)
             {
-                angle.SetValueDegrees((Angle)Segments[^1].Angle);
+                angle.SetValueDegrees((Angle)_scheme.Sides[^1].Angle);
             }
             if (EntrySegment <= 0)
             {
                 return;
             }
+
             Vertex point = CreatePoint(EntrySegment, angle);
-            Points.Add(point);
-            var segment = new Side(Points, EntrySegment, angle);
-            Segments.Add(segment);
+            _scheme.Points.Add(point);
+            var segment = new Side(_scheme.Points, EntrySegment, angle);
+            _scheme.Sides.Add(segment);
 
             bool updated = true;
 
@@ -60,8 +58,8 @@ namespace StretchCeiling.ViewModel
 
         private Vertex CreatePoint(double distance, Angle angle)
         {
-            var newX = distance * Math.Cos(angle.Radian) + Points[^1].X;
-            var newY = distance * Math.Sin(angle.Radian) + Points[^1].Y;
+            var newX = distance * Math.Cos(angle.Radian) + _scheme.Points[^1].X;
+            var newY = distance * Math.Sin(angle.Radian) + _scheme.Points[^1].Y;
             return new Vertex(newX, newY);
         }
 
@@ -81,7 +79,7 @@ namespace StretchCeiling.ViewModel
 
         private void SetAngle()
         {
-            if (Segments.Count > 0)
+            if (_scheme.Sides.Count > 0)
             {
                 OnSelectAngle = new Angle(AngleStandart.InternalAngle90);
                 SelectAngleIndex = 1;

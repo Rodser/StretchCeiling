@@ -1,4 +1,5 @@
-﻿using StretchCeiling.Domain;
+﻿using StretchCeiling.Domain.Model;
+using StretchCeiling.Helper;
 
 namespace StretchCeiling.Model
 {
@@ -10,5 +11,14 @@ namespace StretchCeiling.Model
         public double Price { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime InstallationDate { get; set; }
+
+        public Order()
+        {
+        }
+
+        public Order(List<Ceiling> ceilings)
+        {
+            Ceilings = ModelConverter<Ceiling, ICeiling>.FromModel(ceilings);
+        }
     }
 }

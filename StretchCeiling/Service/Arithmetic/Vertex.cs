@@ -12,5 +12,16 @@ namespace StretchCeiling.Service.Arithmetic
             X = x;
             Y = y;
         }
+
+        public static PointCollection ToPointCollection(List<IVertex> vertices)
+        {
+            PointCollection points = new PointCollection();
+            foreach (IVertex vertex in vertices)
+            {
+                Point point = new(vertex.X, vertex.Y);
+                points.Add(point);
+            }
+            return points;
+        }
     }
 }
