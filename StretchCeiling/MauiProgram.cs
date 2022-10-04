@@ -24,6 +24,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<OrderService>();
         builder.Services.AddTransient<CeilingService>();
 
+        builder.Services.AddAutoMapper(typeof(MappingProfile));
+
         builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<ListComponentsPage>();
         builder.Services.AddSingleton<ListOrdersPage>();

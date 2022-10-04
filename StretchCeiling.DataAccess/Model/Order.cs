@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using StretchCeiling.Domain.Model;
+﻿using StretchCeiling.Domain.Model;
 
-namespace StretchCeiling.Model
+namespace StretchCeiling.DataAccess.Model
 {
     public class Order : IOrder
     {
@@ -12,14 +11,5 @@ namespace StretchCeiling.Model
         public DateTime CreationDate { get; set; }
         public DateTime InstallationDate { get; set; }
 
-        public Order()
-        {
-        }
-
-        public Order(List<Ceiling> ceilings, IMapper mapper)
-        {
-            var mapCeilings = mapper.Map<List<Ceiling>, List<ICeiling>>(ceilings);
-            Ceilings = mapCeilings;
-        }
     }
 }
