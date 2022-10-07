@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using StretchCeiling.Domain.Model;
 using StretchCeiling.Model;
 using StretchCeiling.Service.Arithmetic;
 
@@ -13,12 +12,12 @@ namespace StretchCeiling.ViewModel
             Angles = GetListAngels();
         }
 
-        [ObservableProperty] private IAngle _onSelectAngle;
+        [ObservableProperty] private Angle _onSelectAngle;
         [ObservableProperty] private int selectAngleIndex;
         [ObservableProperty] private string _degreesStr;
         [ObservableProperty] private bool _hasPickerActive;
         [ObservableProperty] private Scheme _scheme;
-        [ObservableProperty] private List<IAngle> _angles;
+        [ObservableProperty] private List<Angle> _angles;
         [ObservableProperty] private double _entrySegment;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -30,11 +29,11 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async void AddSegment()
         {
-            Angle angle = (Angle)OnSelectAngle ?? new Angle(AngleStandart.Zero); 
+            Angle angle = OnSelectAngle ?? new Angle(AngleStandart.Zero); 
             
             if (_scheme.Sides.Count > 0)
             {
-                angle.SetValueDegrees((Angle)_scheme.Sides[^1].Angle);
+                angle.SetValueDegrees(_scheme.Sides[^1].Angle);
             }
             if (EntrySegment <= 0)
             {
@@ -63,9 +62,9 @@ namespace StretchCeiling.ViewModel
             return new Vertex(newX, newY);
         }
 
-        private static List<IAngle> GetListAngels()
+        private static List<Angle> GetListAngels()
         {
-            var angles = new List<IAngle>
+            var angles = new List<Angle>
             {
                 new Angle(AngleStandart.InternalAngle45),
                 new Angle(AngleStandart.InternalAngle90),

@@ -1,33 +1,25 @@
-﻿using StretchCeiling.Domain.Model;
-using StretchCeiling.Helper;
-using StretchCeiling.Service.Arithmetic;
+﻿using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
-    public class Ceiling : ICeiling
+    public class Ceiling 
     {
         private Equipment _cloth;
         private Equipment _profile;
 
-        public IScheme Scheme { get; set; }
+        public Scheme Scheme { get; set; }
         public PointCollection Points => Vertex.ToPointCollection(Scheme.Points);
 
-        public List<IEquipment> Equipments { get; set; }
+        public List<Equipment> Equipments { get; set; }
         public string Name { get; set; }
         public double Square { get; set; }
         public double Perimeter { get; set; }
         public double Price { get; set; }
 
-        public Ceiling(Scheme scheme, List<Equipment> equipments)
-        {
-            Scheme = scheme;
-            Equipments = ModelConverter<Equipment, IEquipment>.FromModel(equipments);
-        }    
-
         public Ceiling()
         {
             Scheme = new Scheme();
-            Equipments = new List<IEquipment>();
+            Equipments = new List<Equipment>();
             _cloth = new()
             {
                 Name = "Cloth",
@@ -66,14 +58,14 @@ namespace StretchCeiling.Model
 
         internal double GetPerimeter()
         {
-            Perimeter = Scheme.GetPerimeter();
+            Perimeter = ((Scheme)Scheme).GetPerimeter();
             Equipments[1].Count = Perimeter;
             return Perimeter;
         }
 
         internal double GetSquare()
         {
-            Square = Scheme.GetSquare();
+            Square = ((Scheme)Scheme).GetSquare();
             Equipments[0].Count = Square;
             return Square;
         }

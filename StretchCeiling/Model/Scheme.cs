@@ -1,14 +1,13 @@
-﻿using StretchCeiling.Domain.Model;
-using StretchCeiling.Helper;
+﻿using StretchCeiling.Domain.Assistive;
 using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
-    public class Scheme : IScheme
+    public class Scheme : IPerimeter, ISquare
     {
         public int Id { get; set; }
-        public List<ISide> Sides { get; set; }
-        public List<IVertex> Points { get; set; }
+        public List<Side> Sides { get; set; }
+        public List<Vertex> Points { get; set; }
 
         public Scheme()
         {
@@ -19,15 +18,9 @@ namespace StretchCeiling.Model
             };
         }
 
-        public Scheme(List<Side> sides, List<Vertex> points)
+        public List<Vertex> GetPoints()
         {
-            Sides = ModelConverter<Side, ISide>.FromModel(sides);
-            Points = ModelConverter<Vertex, IVertex>.FromModel(points);
-        }
-
-        public List<IVertex> GetPoints()
-        {
-            var points = new List<IVertex>();
+            var points = new List<Vertex>();
             foreach (Side segment in Sides)
             {
                 points.Add(segment.EndPoint);

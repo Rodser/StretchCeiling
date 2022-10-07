@@ -1,8 +1,6 @@
-﻿using StretchCeiling.Domain.Model;
-
-namespace StretchCeiling.Model
+﻿namespace StretchCeiling.Model
 {
-    public class Equipment : IEquipment
+    public class Equipment
     {
         public string Name { get; set; }
         public string Measure { get; set; }

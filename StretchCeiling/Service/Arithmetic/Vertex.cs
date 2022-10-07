@@ -1,8 +1,6 @@
-﻿using StretchCeiling.Domain.Model;
-
-namespace StretchCeiling.Service.Arithmetic
+﻿namespace StretchCeiling.Service.Arithmetic
 {
-    public struct Vertex : IVertex
+    public struct Vertex
     {
         public double X { get; set; }
         public double Y { get; set; }
@@ -13,10 +11,10 @@ namespace StretchCeiling.Service.Arithmetic
             Y = y;
         }
 
-        public static PointCollection ToPointCollection(List<IVertex> vertices)
+        public static PointCollection ToPointCollection(List<Vertex> vertices)
         {
             PointCollection points = new PointCollection();
-            foreach (IVertex vertex in vertices)
+            foreach (Vertex vertex in vertices)
             {
                 Point point = new(vertex.X, vertex.Y);
                 points.Add(point);

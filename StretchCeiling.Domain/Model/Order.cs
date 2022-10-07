@@ -1,0 +1,13 @@
+﻿namespace StretchCeiling.Domain.Model
+{
+    public class Order
+    {
+        public string? Address { get; set; }
+        public List<Ceiling>? Ceilings { get; set; }
+        public int CallNumber { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime InstallationDate { get; set; }
+        public double Price { get; set; }
+
+    }
+}

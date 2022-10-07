@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StretchCeiling.Domain;
 using StretchCeiling.Model;
 using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
@@ -8,14 +10,15 @@ namespace StretchCeiling.ViewModel
 {
     public partial class ListOrderViewModel : BaseViewModel
     {
-        private readonly OrderService _orderService;
-
+        private readonly IOrderRepository _orderRepository;
+        private readonly IMapper _mapper;
         [ObservableProperty] private List<Order> _orders;
         [ObservableProperty] private Order _selectedOrder;
 
-        public ListOrderViewModel(OrderService orderService)
+        public ListOrderViewModel(IOrderRepository orderRepository, IMapper mapper)
         {
-            _orderService = orderService;
+            _orderRepository = orderRepository;
+            _mapper = mapper;
             _ = Refresh();
         }
 
@@ -33,7 +36,9 @@ namespace StretchCeiling.ViewModel
             try
             {
                 IsBusy = true;
-                Orders = await _orderService.GetOrders();
+                var context = await _orderRepository.GetOrders();
+                var collection = _mapper.Map<OrdersList>(context);
+                Orders = collection.Orders;
             }
             catch (Exception ex)
             {
@@ -48,12 +53,16 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task OpenOrder(Order order)
         {
-            order ??= new();
+            order ??= new()
+            {
+                Address = "Street",
+                CallNumber = 9997755
+            };
+
             CeilingService ceilingService = new(order);
             var query = new Dictionary<string, object>
             {
                 { nameof(Order), order},
-                { nameof(OrderService), _orderService},
                 { nameof(CeilingService), ceilingService}
             };
             await Shell.Current.GoToAsync(nameof(OrderPage), query);
@@ -63,9 +72,9 @@ namespace StretchCeiling.ViewModel
         private async Task DeleteOrderAsync(Order selected)
         {
             var x = await Shell.Current.DisplayActionSheet("o bosse", "NO", "Realy delete this order?");
-            if (x== "Realy delete this order?")
+            if (x == "Realy delete this order?")
             {
-                await _orderService.DeleteOrder(selected);
+                await _orderRepository.DeleteOrder(selected.Id);
             }
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace StretchCeiling.Domain.Model
+﻿namespace StretchCeiling.Domain.InterfaceModel
 {
     public interface IOrder
     {

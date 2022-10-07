@@ -1,7 +1,7 @@
-﻿namespace StretchCeiling.Domain.Model
+﻿namespace StretchCeiling.Domain.InterfaceModel
 {
     public interface ICeiling
-    {     
+    {
         List<IEquipment> Equipments { get; set; }
         IScheme Scheme { get; set; }
         string Name { get; set; }

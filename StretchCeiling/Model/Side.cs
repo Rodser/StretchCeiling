@@ -1,19 +1,18 @@
-﻿using StretchCeiling.Domain.Model;
-using StretchCeiling.Service.Arithmetic;
+﻿using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
-    public class Side : ISide
+    public class Side
     {
-        private readonly List<IVertex> _points;
+        private readonly List<Vertex> _points;
 
-        public IVertex StartPoint { get; set; }
-        public IVertex EndPoint { get; set; }
+        public Vertex StartPoint { get; set; }
+        public Vertex EndPoint { get; set; }
         public string StartName { get; set; }
         public string EndName { get; set; }
         public string Description { get; set; }
         public double Distance { get; set; }
-        public IAngle Angle { get; set; }
+        public Angle Angle { get; set; }
 
         public Side() {}
 
@@ -24,12 +23,12 @@ namespace StretchCeiling.Model
             Angle = angle;
         }
 
-        public Side(List<IVertex> points, double distance, Angle angle)
+        public Side(List<Vertex> points, double distance, Angle angle)
         {
             _points = points;
-            StartPoint = (Vertex) _points[_points.Count - 2];
+            StartPoint = _points[_points.Count - 2];
             StartName = GetNameOfPoint(_points.Count - 2);
-            EndPoint = (Vertex) _points[_points.Count - 1];
+            EndPoint =  _points[_points.Count - 1];
             EndName = GetNameOfPoint(_points.Count - 1);
             Distance = distance;
             Angle = angle;

@@ -1,6 +1,4 @@
-﻿using StretchCeiling.Domain.Model;
-using StretchCeiling.Helper;
-using StretchCeiling.Model;
+﻿using StretchCeiling.Model;
 
 namespace StretchCeiling.Service
 {
@@ -12,20 +10,17 @@ namespace StretchCeiling.Service
 
         public CeilingService(Order order)
         {            
-            _ceilings = ModelConverter<Ceiling, ICeiling>.ToModel(order.Ceilings);
-            if (_ceilings is null)
-            {
-                _ceilings = new List<Ceiling>();
-            }
+            _ceilings = order.Ceilings;
+            _ceilings ??= new List<Ceiling>();
         }
 
         /// <summary>
         /// Получить коллекцию потолков
         /// </summary>
         /// <returns></returns>
-        public List<ICeiling> GetCeilings()
+        public List<Ceiling> GetCeilings()
         {            
-            return ModelConverter<Ceiling, ICeiling>.FromModel(_ceilings);
+            return _ceilings;
         }
 
         /// <summary>

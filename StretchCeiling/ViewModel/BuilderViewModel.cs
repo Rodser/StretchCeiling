@@ -1,7 +1,6 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using StretchCeiling.Domain.Model;
 using StretchCeiling.Model;
 using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
@@ -10,18 +9,23 @@ namespace StretchCeiling.ViewModel
 {
     public partial class BuilderViewModel : BaseViewModel, IQueryAttributable
     {
+        private static int _ceilingCount;
+
         private readonly Ceiling _ceiling;
         private CeilingService _ceilingService;
 
         [ObservableProperty] private PointCollection _points;
-        [ObservableProperty] private List<ISide> _sides;
+        [ObservableProperty] private List<Side> _sides;
         [ObservableProperty] private double _perimeter;
         [ObservableProperty] private double _square;
-        [ObservableProperty] private List<IEquipment> _equipments;
+        [ObservableProperty] private List<Equipment> _equipments;
 
         public BuilderViewModel()
         {
-            _ceiling = new();
+            _ceiling = new()
+            {
+                Name =$"Ceiling #{++_ceilingCount}"
+            };
             Sides = _ceiling.Scheme.Sides;
             Points = _ceiling.Points;
             Perimeter = _ceiling.Perimeter;
