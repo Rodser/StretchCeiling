@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using StretchCeiling.DataAccess;
 using StretchCeiling.Domain;
-using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
 using StretchCeiling.ViewModel;
 
@@ -22,8 +21,6 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-
-        builder.Services.AddTransient<CeilingService>();
 
         builder.Services.AddAutoMapper(typeof(MappingProfile));
         builder.Services.AddSingleton<IOrderRepository, OrderRepository>();

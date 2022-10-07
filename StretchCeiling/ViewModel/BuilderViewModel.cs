@@ -2,17 +2,14 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StretchCeiling.Model;
-using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
 
 namespace StretchCeiling.ViewModel
 {
     public partial class BuilderViewModel : BaseViewModel, IQueryAttributable
     {
-        private static int _ceilingCount;
-
-        private readonly Ceiling _ceiling;
-        private CeilingService _ceilingService;
+        private Order _order;
+        private Ceiling _ceiling;
 
         [ObservableProperty] private PointCollection _points;
         [ObservableProperty] private List<Side> _sides;
@@ -20,17 +17,30 @@ namespace StretchCeiling.ViewModel
         [ObservableProperty] private double _square;
         [ObservableProperty] private List<Equipment> _equipments;
 
-        public BuilderViewModel()
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            _ceiling = new()
+            if (query.ContainsKey(nameof(Ceiling)))
             {
-                Name =$"Ceiling #{++_ceilingCount}"
-            };
-            Sides = _ceiling.Scheme.Sides;
-            Points = _ceiling.Points;
-            Perimeter = _ceiling.Perimeter;
-            Square = _ceiling.Square;
-            _equipments = _ceiling.Equipments;
+                _ceiling = (Ceiling)query[nameof(Ceiling)];
+                _order = (Order)query[nameof(Order)];
+
+                Sides = _ceiling.Scheme.Sides;
+                Points = _ceiling.Points;
+                Perimeter = _ceiling.Perimeter;
+                Square = _ceiling.Square;
+                _equipments = _ceiling.Equipments;
+            }
+            if (query.ContainsKey("updated"))
+            {
+                bool updated = (bool)query["updated"];
+                if (updated)
+                {
+                    Perimeter = _ceiling.GetPerimeter();
+                    Square = _ceiling.GetSquare();
+                    _ceiling.RefreshPrice();
+                    Points = _ceiling.Points;
+                }
+            }
         }
 
         [RelayCommand]
@@ -56,13 +66,13 @@ namespace StretchCeiling.ViewModel
         {
             if (Sides.Count > 0)
             {
-                _ceilingService.AddCeiling(_ceiling);
+                _order.AddCeiling(_ceiling);
             }
-            var queryUpdate = new Dictionary<string, object>
-            {
-                {"updated", true }
-            };
-            await Shell.Current.GoToAsync("..", queryUpdate);
+            //var queryUpdate = new Dictionary<string, object>
+            //{
+            //    {"updated", true }
+            //};
+            await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
@@ -70,28 +80,9 @@ namespace StretchCeiling.ViewModel
         {
             var query = new Dictionary<string, object>
             {
-                { nameof(Ceiling), _ceiling }
+                { nameof(Equipment), _equipments }
             };
             await Shell.Current.GoToAsync(nameof(ComponentPage), query);
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(nameof(CeilingService)))
-            {
-                _ceilingService = (CeilingService)query[nameof(CeilingService)];    
-            }
-            if (query.ContainsKey("updated"))
-            {
-                bool updated = (bool)query["updated"];
-                if (updated)
-                {
-                    Perimeter = _ceiling.GetPerimeter();
-                    Square = _ceiling.GetSquare();
-                    _ceiling.RefreshPrice();
-                    Points = _ceiling.Points;
-                }
-            }
         }
     }
 }

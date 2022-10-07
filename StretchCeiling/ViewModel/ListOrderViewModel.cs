@@ -3,12 +3,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using StretchCeiling.Domain;
 using StretchCeiling.Model;
-using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class ListOrderViewModel : BaseViewModel
+    public partial class ListOrderViewModel : BaseViewModel, IQueryAttributable
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
@@ -21,6 +20,14 @@ namespace StretchCeiling.ViewModel
             _mapper = mapper;
             _ = Refresh();
         }
+        
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey("updated"))
+            {
+                _ = Refresh();
+            }
+        }
 
         [RelayCommand]
         private async Task Refresh()
@@ -28,6 +35,24 @@ namespace StretchCeiling.ViewModel
             await GetOrdersAsync();
         }
 
+        [RelayCommand]
+        private async Task OpenOrder(Order order)
+        {
+            order ??= new()
+            {
+                Address = "Street",
+                CallNumber = 9997755,
+                Ceilings = new()
+            };
+
+            var query = new Dictionary<string, object>
+            {
+                { nameof(Order), order},
+            };
+            await Shell.Current.GoToAsync(nameof(OrderPage), query);
+        }
+
+        [RelayCommand]
         private async Task GetOrdersAsync()
         {
             if (IsBusy)
@@ -49,26 +74,7 @@ namespace StretchCeiling.ViewModel
                 IsBusy = false;
             }
         }
-
-        [RelayCommand]
-        private async Task OpenOrder(Order order)
-        {
-            order ??= new()
-            {
-                Address = "Street",
-                CallNumber = 9997755
-            };
-
-            CeilingService ceilingService = new(order);
-            var query = new Dictionary<string, object>
-            {
-                { nameof(Order), order},
-                { nameof(CeilingService), ceilingService}
-            };
-            await Shell.Current.GoToAsync(nameof(OrderPage), query);
-        }
-
-        [RelayCommand]
+        
         private async Task DeleteOrderAsync(Order selected)
         {
             var x = await Shell.Current.DisplayActionSheet("o bosse", "NO", "Realy delete this order?");

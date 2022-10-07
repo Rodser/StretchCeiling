@@ -2,6 +2,7 @@
 {
     public class Order
     {
+        public int Id { get; set; }
         public string? Address { get; set; }
         public List<Ceiling>? Ceilings { get; set; }
         public int CallNumber { get; set; }
