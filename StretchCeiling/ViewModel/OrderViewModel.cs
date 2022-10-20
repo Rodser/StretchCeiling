@@ -1,31 +1,46 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StretchCeiling.Domain;
 using StretchCeiling.Model;
-using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
-using System.Collections.ObjectModel;
+using dom = StretchCeiling.Domain.Model;
 
 namespace StretchCeiling.ViewModel
 {
     public partial class OrderViewModel : BaseViewModel, IQueryAttributable
     {
-        private OrderService _orderService;
-        private CeilingService _ceilingService;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IMapper _mapper;
         private Order _order;
 
         [ObservableProperty] public double _price;
-        [ObservableProperty] private ObservableCollection<Ceiling> _ceilings;
+        [ObservableProperty] private List<Ceiling> _ceilings;
 
-        public OrderViewModel()
+        public OrderViewModel(IOrderRepository orderRepository, IMapper mapper)
         {
+            _orderRepository = orderRepository;
+            _mapper = mapper;
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey(nameof(Order)))
+            {
+                _order = (Order)query[nameof(Order)];
+                Ceilings = _order.Ceilings;
+                Price = _order.Price;
+            }
         }
 
         [RelayCommand]
-        private async Task BuildCeiling()
+        private async Task BuildCeiling(Ceiling ceiling)
         {
+            ceiling ??= new() { Name = "Room" };
             var query = new Dictionary<string, object>
             {
-                { nameof(CeilingService), _ceilingService },
+                { nameof(Ceiling), ceiling },
+                { nameof(Order), _order}
             };
             await Shell.Current.GoToAsync(nameof(BuilderPage), query);
         }
@@ -33,33 +48,14 @@ namespace StretchCeiling.ViewModel
         [RelayCommand]
         private async Task GoBackAddOrder()
         {
-             await _orderService.AddOrder(_order);
+            var order = _mapper.Map<dom.Order>(_order);
+            await _orderRepository.AddOrder(order);
 
             var query = new Dictionary<string, object>
             {
                 {"updated", true }
             };
             await Shell.Current.GoToAsync("..", query);
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (query.ContainsKey(nameof(Order)))
-            {
-                _orderService = (OrderService)query[nameof(OrderService)];
-                _order = (Order)query[nameof(Order)];
-                _ceilingService = new CeilingService(_order);
-            }
-            if (query.ContainsKey("updated"))
-            {
-                bool updated = (bool)query["updated"];
-                if (updated)
-                {
-                    Ceilings = _ceilingService.GetCeilings();
-                    Price = _ceilingService.TotalPrice;
-                    _order.Price = Price;
-                }
-            }
         }
     }
 }

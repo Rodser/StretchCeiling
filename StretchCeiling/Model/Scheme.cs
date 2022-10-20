@@ -1,27 +1,27 @@
-﻿using StretchCeiling.Service.Arithmetic;
-using System.Collections.ObjectModel;
+﻿using StretchCeiling.Domain.Assistive;
+using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
-    public class SchemeCeiling
+    public class Scheme : IPerimeter, ISquare
     {
-        public SchemeCeiling()
+        public int Id { get; set; }
+        public List<Side> Sides { get; set; }
+        public List<Vertex> Points { get; set; }
+
+        public Scheme()
         {
-            Segments = new();
+            Sides = new();
             Points = new()
             {
-                Point.Zero
+               new Vertex(0,0)
             };
         }
 
-        public int Id { get; set; }
-        public ObservableCollection<Segment> Segments { get; set; }
-        public PointCollection Points { get; set; }
-
-        public PointCollection GetPoints()
+        public List<Vertex> GetPoints()
         {
-            var points = new PointCollection();
-            foreach (var segment in Segments)
+            var points = new List<Vertex>();
+            foreach (Side segment in Sides)
             {
                 points.Add(segment.EndPoint);
             }
@@ -31,16 +31,16 @@ namespace StretchCeiling.Model
         public double GetPerimeter()
         {
             double perimeter = 0.0;
-            if (Segments.Count > 0)
+            if (Sides.Count > 0)
             {
-                foreach (var segment in Segments)
+                foreach (var segment in Sides)
                 {
                     perimeter += segment.Distance;
                 }
-                if (Segments.Count > 1)
+                if (Sides.Count > 1)
                 {
-                    var a = Segments[0].StartPoint;
-                    var b = Segments[^1].EndPoint;
+                    var a = Sides[0].StartPoint;
+                    var b = Sides[^1].EndPoint;
 
                     perimeter += Geometry.Distance(a.X, a.Y, b.X, b.Y);
                 }
@@ -48,7 +48,7 @@ namespace StretchCeiling.Model
             return Geometry.ConvertCentimetersToMeters(perimeter);
         }
 
-        internal double GetSquare() 
+        public double GetSquare()
         {
             List<Vertex> vertexes = new();
 

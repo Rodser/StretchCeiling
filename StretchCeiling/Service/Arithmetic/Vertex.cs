@@ -10,5 +10,16 @@
             X = x;
             Y = y;
         }
+
+        public static PointCollection ToPointCollection(List<Vertex> vertices)
+        {
+            PointCollection points = new PointCollection();
+            foreach (Vertex vertex in vertices)
+            {
+                Point point = new(vertex.X, vertex.Y);
+                points.Add(point);
+            }
+            return points;
+        }
     }
 }

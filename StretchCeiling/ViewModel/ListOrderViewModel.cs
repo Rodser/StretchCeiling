@@ -1,22 +1,32 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using StretchCeiling.Domain;
 using StretchCeiling.Model;
-using StretchCeiling.Service;
 using StretchCeiling.View.Pages;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace StretchCeiling.ViewModel
 {
-    public partial class ListOrderViewModel : BaseViewModel
+    public partial class ListOrderViewModel : BaseViewModel, IQueryAttributable
     {
-        private readonly OrderService _orderService;
-        [ObservableProperty] private ObservableCollection<Order> _orders;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IMapper _mapper;
+        [ObservableProperty] private List<Order> _orders;
+        [ObservableProperty] private Order _selectedOrder;
 
-        public ListOrderViewModel(OrderService orderService)
+        public ListOrderViewModel(IOrderRepository orderRepository, IMapper mapper)
         {
-            _orderService = orderService;
+            _orderRepository = orderRepository;
+            _mapper = mapper;
             _ = Refresh();
+        }
+        
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey("updated"))
+            {
+                _ = Refresh();
+            }
         }
 
         [RelayCommand]
@@ -25,6 +35,24 @@ namespace StretchCeiling.ViewModel
             await GetOrdersAsync();
         }
 
+        [RelayCommand]
+        private async Task OpenOrder(Order order)
+        {
+            order ??= new()
+            {
+                Address = "Street",
+                CallNumber = 9997755,
+                Ceilings = new()
+            };
+
+            var query = new Dictionary<string, object>
+            {
+                { nameof(Order), order},
+            };
+            await Shell.Current.GoToAsync(nameof(OrderPage), query);
+        }
+
+        [RelayCommand]
         private async Task GetOrdersAsync()
         {
             if (IsBusy)
@@ -33,11 +61,12 @@ namespace StretchCeiling.ViewModel
             try
             {
                 IsBusy = true;
-                Orders = await _orderService.GetOrders();
+                var context = await _orderRepository.GetOrders();
+                var collection = _mapper.Map<OrdersList>(context);
+                Orders = collection.Orders;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Unable to get monkeys: {ex.Message}");
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
             finally
@@ -45,29 +74,13 @@ namespace StretchCeiling.ViewModel
                 IsBusy = false;
             }
         }
-
-        [RelayCommand]
-        private async Task AddOrder()
-        {
-            var order = new Order { Ceilings = new ObservableCollection<Ceiling>() };
-            var query = new Dictionary<string, object>
-            {
-                { nameof(Order), order},
-                { nameof(OrderService), _orderService}
-            };
-            await Shell.Current.GoToAsync(nameof(OrderPage), query);
-        }
-
-        [RelayCommand]
+        
         private async Task DeleteOrderAsync(Order selected)
         {
             var x = await Shell.Current.DisplayActionSheet("o bosse", "NO", "Realy delete this order?");
-            if (x== "Realy delete this order?")
+            if (x == "Realy delete this order?")
             {
-                await _orderService.DeleteOrder(selected);
-                
-            
-                //Orders = await _orderService.GetOrders();
+                await _orderRepository.DeleteOrder(selected.Id);
             }
         }
     }

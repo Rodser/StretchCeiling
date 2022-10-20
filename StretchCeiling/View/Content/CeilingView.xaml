@@ -6,16 +6,6 @@
              x:DataType="viewmodel:CeilingViewModel">
     <VerticalStackLayout>
         <StackLayout>
-                            <Polygon Aspect="Uniform"
-                                     Margin="30"
-                     Points="{Binding Points}"
-                     Fill="{StaticResource Gray600}"
-                     StrokeThickness="3" 
-                     Stroke="{StaticResource Gray600}"/>
-            
-            <Frame BackgroundColor="{StaticResource Blue300Accent}">
-                <Label Text="{Binding Price}"/>
-            </Frame>
         </StackLayout>
     </VerticalStackLayout>
 </ContentView>

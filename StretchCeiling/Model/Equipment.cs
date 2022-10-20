@@ -1,6 +1,6 @@
 ﻿namespace StretchCeiling.Model
 {
-    public class Component
+    public class Equipment
     {
         public string Name { get; set; }
         public string Measure { get; set; }

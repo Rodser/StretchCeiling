@@ -1,27 +1,25 @@
-﻿using System.Collections.ObjectModel;
-using StretchCeiling.Domain;
+﻿using StretchCeiling.Service.Arithmetic;
 
 namespace StretchCeiling.Model
 {
-    public class Ceiling : ICeiling
+    public class Ceiling 
     {
-        private Component _cloth;
-        private Component _profile;
-        private ObservableCollection<Component> _components;
-     
-        public SchemeCeiling Scheme { get; set; }
-        public PointCollection Points => Scheme.Points;
+        private Equipment _cloth;
+        private Equipment _profile;
 
+        public Scheme Scheme { get; set; }
+        public PointCollection Points => Vertex.ToPointCollection(Scheme.Points);
+
+        public List<Equipment> Equipments { get; set; }
         public string Name { get; set; }
         public double Square { get; set; }
         public double Perimeter { get; set; }
         public double Price { get; set; }
-        public ObservableCollection<Component> Components { get => _components; private set => _components = value; }
 
         public Ceiling()
         {
-            Scheme = new SchemeCeiling();
-            _components = new ObservableCollection<Component>();
+            Scheme = new Scheme();
+            Equipments = new List<Equipment>();
             _cloth = new()
             {
                 Name = "Cloth",
@@ -34,8 +32,8 @@ namespace StretchCeiling.Model
                 Price = 100,
                 Measure = "m"
             };
-            _components.Add(_cloth);
-            _components.Add(_profile);
+            Equipments.Add(_cloth);
+            Equipments.Add(_profile);
         }
 
         internal void RefreshPrice()
@@ -49,7 +47,7 @@ namespace StretchCeiling.Model
             double profilePrice = Perimeter * _profile.Price;
 
             double componentsPrice = 0;
-            foreach (var component in _components)
+            foreach (var component in Equipments)
             {
                 var multiply = component.Price * component.Count;
                 componentsPrice += multiply;
@@ -60,21 +58,21 @@ namespace StretchCeiling.Model
 
         internal double GetPerimeter()
         {
-            Perimeter = Scheme.GetPerimeter();
-            _components[1].Count = Perimeter;
+            Perimeter = ((Scheme)Scheme).GetPerimeter();
+            Equipments[1].Count = Perimeter;
             return Perimeter;
         }
 
         internal double GetSquare()
         {
-            Square = Scheme.GetSquare();
-            _components[0].Count = Square;
+            Square = ((Scheme)Scheme).GetSquare();
+            Equipments[0].Count = Square;
             return Square;
         }
 
-        internal void AddComponent(Component component)
+        internal void AddComponent(Equipment component)
         {
-            _components.Add(component);
+            Equipments.Add(component);
         }
     }
 }

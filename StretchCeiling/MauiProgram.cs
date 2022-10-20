@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
-using StretchCeiling.Service;
+using StretchCeiling.DataAccess;
+using StretchCeiling.Domain;
 using StretchCeiling.View.Pages;
 using StretchCeiling.ViewModel;
 
@@ -21,8 +22,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-        builder.Services.AddSingleton<OrderService>();
-        builder.Services.AddTransient<CeilingService>();
+        builder.Services.AddAutoMapper(typeof(MappingProfile));
+        builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
 
         builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<ListComponentsPage>();
@@ -32,11 +33,10 @@ public static class MauiProgram
         builder.Services.AddTransient<BuilderPage>();
         builder.Services.AddTransient<EditorSegmentPage>();
 
-        builder.Services.AddTransient<OrderViewModel>();
         builder.Services.AddSingleton<ListOrderViewModel>();
+        builder.Services.AddTransient<OrderViewModel>();
         builder.Services.AddTransient<BuilderViewModel>();
         builder.Services.AddTransient<EditorSegmentViewModel>();
-        builder.Services.AddTransient<CeilingViewModel>();
         builder.Services.AddTransient<ComponentViewModel>();
 
         return builder.Build();
